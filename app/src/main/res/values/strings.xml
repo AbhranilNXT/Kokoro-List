@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">InternshipTask</string>
+    <string name="create_account">Please enter a valid email and password that is at least 6 characters</string>
 </resources>
