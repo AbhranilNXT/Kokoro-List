@@ -29,6 +29,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.internshiptask.R
 import com.example.internshiptask.view.components.AppLogo
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
@@ -53,6 +54,23 @@ fun SplashScreen(navController: NavController) {
                 saveState = true
             }
         }
+//        if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+//            navController.navigate(InternshipTaskScreens.LoginScreen.route) {
+//                popUpTo(InternshipTaskScreens.SplashScreen.route){
+//                    inclusive = true
+//                    saveState = true
+//                }
+//            }
+//        }
+//        else {
+//            navController.navigate(InternshipTaskScreens.HomeScreen.route) {
+//                popUpTo(InternshipTaskScreens.SplashScreen.route) {
+//                    inclusive = true
+//                    saveState = true
+//                }
+//            }
+//        }
+
     })
 
     Surface(modifier = Modifier

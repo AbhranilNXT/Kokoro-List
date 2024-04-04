@@ -51,7 +51,7 @@ fun UserForm(
     val passwordFocusRequest = FocusRequester.Default
     val keyboardController = LocalSoftwareKeyboardController.current
     val valid = remember(email.value, password.value) {
-        email.value.trim().isNotEmpty() && isValidEmail(email.value) && password.value.trim().isNotEmpty()
+        email.value.trim().isNotEmpty() && isValidEmail(email.value) && password.value.trim().isNotEmpty() && password.value.trim().length > 5
     }
     val modifier = Modifier
         .height(280.dp)
