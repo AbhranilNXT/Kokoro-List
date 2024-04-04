@@ -22,9 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.internshiptask.view.components.AppLogo
 import com.example.internshiptask.view.components.UserForm
+import com.example.internshiptask.view.navigation.InternshipTaskScreens
+import com.example.internshiptask.vm.LoginViewModel
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
     val showLoginForm = rememberSaveable { mutableStateOf(true) }
 
@@ -34,11 +36,15 @@ fun LoginScreen(navController: NavController) {
             AppLogo(modifier = Modifier.padding(top = 24.dp))
 
             if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false) { email, pwd ->
-                //TODO: Login to FB
+                viewModel.signInWithEmailPass(email, pwd){
+                    navController.navigate(InternshipTaskScreens.HomeScreen.route)
+                }
             }
             else {
                 UserForm(loading = false, isCreateAccount = true) { email, pwd ->
-                    //TODO: Create FB Account
+                    viewModel.createUserWithEmailPass(email, pwd) {
+                        navController.navigate(InternshipTaskScreens.HomeScreen.route)
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -51,9 +57,11 @@ fun LoginScreen(navController: NavController) {
                 val userText = if(showLoginForm.value) "New User?" else "Existing User?"
                 Text(text = userText)
                 Text(text = text,
-                    modifier = Modifier.clickable {
-                        showLoginForm.value = !showLoginForm.value
-                    }.padding(start = 4.dp),
+                    modifier = Modifier
+                        .clickable {
+                            showLoginForm.value = !showLoginForm.value
+                        }
+                        .padding(start = 4.dp),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.secondary)
             }
