@@ -1,6 +1,6 @@
-package com.example.internshiptask.data.model
+package com.example.internshiptask.data.model.main
 
-data class Licensor(
+data class Theme(
     val mal_id: Int,
     val name: String,
     val type: String,

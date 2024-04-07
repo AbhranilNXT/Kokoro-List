@@ -2,9 +2,11 @@ package com.example.internshiptask.view.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.internshiptask.view.screens.CreateAccountScreen
 import com.example.internshiptask.view.screens.DetailsScreen
 import com.example.internshiptask.view.screens.HomeScreen
@@ -42,8 +44,15 @@ fun InternshipTaskNavigation() {
             SearchScreen(navController = navController, viewModel = searchViewModel)
         }
 
-        composable(InternshipTaskScreens.DetailsScreen.route) {
-            DetailsScreen(navController = navController)
+        val detailName = InternshipTaskScreens.DetailsScreen.route
+        composable("$detailName/{animeID}", arguments = listOf(navArgument("animeID"){
+            type = NavType.IntType
+        })) {backStackEntry ->
+            backStackEntry.arguments?.getInt("animeID").let {
+                if (it != null) {
+                    DetailsScreen(navController = navController, animeId = it)
+                }
+            }
         }
 
         composable(InternshipTaskScreens.UpdateScreen.route) {

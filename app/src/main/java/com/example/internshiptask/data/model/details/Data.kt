@@ -1,12 +1,12 @@
-package com.example.internshiptask.data.model
+package com.example.internshiptask.data.model.details
 
 data class Data(
     val aired: Aired,
     val airing: Boolean,
     val approved: Boolean,
-    val background: String,
+    val background: Any,
     val broadcast: Broadcast,
-    val demographics: List<Demographic>,
+    val demographics: List<Any>,
     val duration: String,
     val episodes: Int,
     val explicit_genres: List<Any>,
@@ -27,11 +27,11 @@ data class Data(
     val status: String,
     val studios: List<Studio>,
     val synopsis: String,
-    val themes: List<Theme>,
+    val themes: List<Any>,
     val title: String,
-    val title_english: String,
+    val title_english: Any,
     val title_japanese: String,
-    val title_synonyms: List<String>,
+    val title_synonyms: List<Any>,
     val titles: List<Title>,
     val trailer: Trailer,
     val type: String,

@@ -1,6 +1,6 @@
-package com.example.internshiptask.data.model
+package com.example.internshiptask.data.model.details
 
-data class Studio(
+data class Genre(
     val mal_id: Int,
     val name: String,
     val type: String,

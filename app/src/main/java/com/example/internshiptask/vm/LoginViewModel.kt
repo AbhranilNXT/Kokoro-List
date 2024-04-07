@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.internshiptask.data.model.DataUser
+import com.example.internshiptask.data.model.main.DataUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
@@ -58,11 +58,13 @@ class LoginViewModel: ViewModel() {
 
     private fun addUserToFirestore(displayName: String?) {
         val userId = auth.currentUser?.uid
-        val user = DataUser(userId = userId.toString(),
+        val user = DataUser(
+            userId = userId.toString(),
             displayName = displayName.toString(),
             avatarUrl = "",
             quote = "I Love Kotlin",
-            profession = "Android Developer", id = null).toMap()
+            profession = "Android Developer", id = null
+        ).toMap()
 
         FirebaseFirestore.getInstance().collection("users")
             .add(user)

@@ -21,13 +21,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.internshiptask.R
-import com.example.internshiptask.data.model.Data
+import com.example.internshiptask.data.model.main.Data
+import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.google.common.base.Strings.isNullOrEmpty
 
 @Composable
 fun AnimeRow(anime: Data, navController: NavController) {
     Card(modifier = Modifier
-        .clickable { }
+        .clickable {
+            navController.navigate(InternshipTaskScreens.DetailsScreen.route + "/${anime.mal_id}")
+        }
         .fillMaxWidth()
         .height(168.dp)
         .padding(4.dp),

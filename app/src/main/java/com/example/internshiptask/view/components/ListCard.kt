@@ -28,12 +28,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
-import com.example.internshiptask.data.model.MAnime
+import com.example.internshiptask.data.model.main.MAnime
 
 
 @Preview
 @Composable
-fun ListCard(anime: MAnime = MAnime("a1010","Jujutsu Kaisen","Gege Akutami","itadori yuujiii"),
+fun ListCard(anime: MAnime = MAnime(
+    "a1010",
+    "Jujutsu Kaisen",
+    "Gege Akutami",
+    "itadori yuujiii"
+),
              onPressDetails: (String) -> Unit = {}) {
     val context = LocalContext.current
     val resources = context.resources

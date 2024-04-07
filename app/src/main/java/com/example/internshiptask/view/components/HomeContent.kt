@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.internshiptask.data.model.MAnime
+import com.example.internshiptask.data.model.main.MAnime
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.google.firebase.auth.FirebaseAuth
 
@@ -34,11 +34,12 @@ fun HomeContent(navController: NavController) {
     else "N/A"
 
     val listOfAnime = listOf(
-        MAnime("saa11w","Jujutsu Kaisen","Mappa",null),
-        MAnime("saa11w","Kaisen","Mappa",null),
-        MAnime("saa11w","Jujutsu","Mappa",null),
-        MAnime("saa11w","Jujutsu Kaisen","Mappa",null),
-        MAnime("saa11w","Jujutsu Kaisen","Mappa",null))
+        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null),
+        MAnime("saa11w", "Kaisen", "Mappa", null),
+        MAnime("saa11w", "Jujutsu", "Mappa", null),
+        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null),
+        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null)
+    )
 
 
     Column(modifier = Modifier.padding(2.dp),

@@ -1,4 +1,4 @@
-package com.example.internshiptask.data.model
+package com.example.internshiptask.data.model.main
 
 data class ImagesX(
     val image_url: String,

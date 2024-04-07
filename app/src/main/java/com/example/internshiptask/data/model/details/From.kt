@@ -1,4 +1,4 @@
-package com.example.internshiptask.data.model
+package com.example.internshiptask.data.model.details
 
 data class From(
     val day: Int,
