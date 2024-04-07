@@ -21,7 +21,7 @@ fun AnimeList(navController: NavController, viewModel:AnimeSearchViewModel = hil
     when(animeList)
     {
         is UiState.Idle -> {
-            viewModel.loadAnime(query = "Jujutsu Kaisen")
+            viewModel.loadAnime(query = "")
         }
         is UiState.Loading -> {
             LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
