@@ -48,28 +48,22 @@ fun SplashScreen(navController: NavController) {
                 })
         )
         delay(2000L)
-        navController.navigate(InternshipTaskScreens.LoginScreen.route) {
-            popUpTo(InternshipTaskScreens.SplashScreen.route){
-                inclusive = true
-                saveState = true
+        if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
+            navController.navigate(InternshipTaskScreens.LoginScreen.route) {
+                popUpTo(InternshipTaskScreens.SplashScreen.route){
+                    inclusive = true
+                    saveState = true
+                }
             }
         }
-//        if(FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty()) {
-//            navController.navigate(InternshipTaskScreens.LoginScreen.route) {
-//                popUpTo(InternshipTaskScreens.SplashScreen.route){
-//                    inclusive = true
-//                    saveState = true
-//                }
-//            }
-//        }
-//        else {
-//            navController.navigate(InternshipTaskScreens.HomeScreen.route) {
-//                popUpTo(InternshipTaskScreens.SplashScreen.route) {
-//                    inclusive = true
-//                    saveState = true
-//                }
-//            }
-//        }
+        else {
+            navController.navigate(InternshipTaskScreens.HomeScreen.route) {
+                popUpTo(InternshipTaskScreens.SplashScreen.route) {
+                    inclusive = true
+                    saveState = true
+                }
+            }
+        }
 
     })
 

@@ -1,6 +1,7 @@
 package com.example.internshiptask.view.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +13,7 @@ import com.example.internshiptask.view.screens.SearchScreen
 import com.example.internshiptask.view.screens.SplashScreen
 import com.example.internshiptask.view.screens.StatsScreen
 import com.example.internshiptask.view.screens.UpdateScreen
+import com.example.internshiptask.vm.AnimeSearchViewModel
 
 @Composable
 fun InternshipTaskNavigation() {
@@ -36,7 +38,8 @@ fun InternshipTaskNavigation() {
         }
 
         composable(InternshipTaskScreens.SearchScreen.route) {
-            SearchScreen(navController = navController)
+            val searchViewModel = hiltViewModel<AnimeSearchViewModel>()
+            SearchScreen(navController = navController, viewModel = searchViewModel)
         }
 
         composable(InternshipTaskScreens.DetailsScreen.route) {

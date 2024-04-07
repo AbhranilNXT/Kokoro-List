@@ -37,13 +37,23 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androi
 
             if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false) { email, pwd ->
                 viewModel.signInWithEmailPass(email, pwd){
-                    navController.navigate(InternshipTaskScreens.HomeScreen.route)
+                    navController.navigate(InternshipTaskScreens.HomeScreen.route){
+                        popUpTo(InternshipTaskScreens.LoginScreen.route){
+                            inclusive = true
+                            saveState = true
+                        }
+                    }
                 }
             }
             else {
                 UserForm(loading = false, isCreateAccount = true) { email, pwd ->
                     viewModel.createUserWithEmailPass(email, pwd) {
-                        navController.navigate(InternshipTaskScreens.HomeScreen.route)
+                        navController.navigate(InternshipTaskScreens.HomeScreen.route){
+                            popUpTo(InternshipTaskScreens.LoginScreen.route){
+                                inclusive = true
+                                saveState = true
+                            }
+                        }
                     }
                 }
             }

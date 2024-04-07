@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">InternshipTask</string>
     <string name="create_account">Please enter a valid email and password that is at least 6 characters</string>
+    <string name="img404url">https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg</string>
 </resources>
