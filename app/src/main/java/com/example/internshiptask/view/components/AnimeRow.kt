@@ -23,13 +23,12 @@ import androidx.navigation.NavController
 import com.example.internshiptask.R
 import com.example.internshiptask.data.model.main.Data
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
-import com.google.common.base.Strings.isNullOrEmpty
 
 @Composable
-fun AnimeRow(anime: Data, navController: NavController) {
+fun AnimeRow(animeData: Data, navController: NavController) {
     Card(modifier = Modifier
         .clickable {
-            navController.navigate(InternshipTaskScreens.DetailsScreen.route + "/${anime.mal_id}")
+            navController.navigate(InternshipTaskScreens.DetailsScreen.route + "/${animeData.mal_id}")
         }
         .fillMaxWidth()
         .height(168.dp)
@@ -39,8 +38,8 @@ fun AnimeRow(anime: Data, navController: NavController) {
         Row(modifier = Modifier.padding(4.dp),
             verticalAlignment = Alignment.Top) {
 
-            val imgUrl = if(!anime.images.jpg.large_image_url.isNullOrEmpty())
-                anime.images.jpg.large_image_url
+            val imgUrl = if(!animeData.images.jpg.large_image_url.isNullOrEmpty())
+                animeData.images.jpg.large_image_url
             else R.string.img404url
 
             ShimmerImage(imgUrl = imgUrl.toString(), modifier = Modifier
@@ -49,28 +48,28 @@ fun AnimeRow(anime: Data, navController: NavController) {
                 .padding(end = 4.dp))
 
             Column {
-                val title = if (!anime.title_english.isNullOrEmpty())
-                    anime.title_english
-                else anime.title
+                val title = if (!animeData.title_english.isNullOrEmpty())
+                    animeData.title_english
+                else animeData.title
 
-                val studio = if (!anime.studios.isNullOrEmpty())
-                    anime.studios[0].name
-                else "Not Found"
+                val studio = if (!animeData.studios.isNullOrEmpty())
+                    animeData.studios[0].name
+                else "No Info"
 
-                var genre0 = if(!anime.genres.isNullOrEmpty())
-                    anime.genres[0].name
-                else "Not Found"
+                var genre0 = if(!animeData.genres.isNullOrEmpty())
+                    animeData.genres[0].name
+                else "No Info"
 
-                var genreNum = anime.genres.size
+                val genreNum = animeData.genres.size
                 if (genreNum > 1) {
                     for (i in 1 until genreNum) {
-                        genre0 += ", ${anime.genres[i].name}"
+                        genre0 += ", ${animeData.genres[i].name}"
                     }
                 }
 
-                val year = if (anime.year == 0)
-                    "Not Yet Released"
-                else anime.year
+                val year = if (animeData.year == 0)
+                    "No Info"
+                else animeData.year
 
                 Text(
                     text = title,
@@ -83,7 +82,7 @@ fun AnimeRow(anime: Data, navController: NavController) {
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = "Episodes: ${anime.episodes!!}",
+                    text = "Episodes: ${animeData.episodes!!}",
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.labelSmall,
                     fontStyle = FontStyle.Italic
@@ -95,13 +94,13 @@ fun AnimeRow(anime: Data, navController: NavController) {
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = "Status: ${anime.status!!}",
+                    text = "Status: ${animeData.status!!}",
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.labelSmall,
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = "MAL Score: ${anime.score!!}",
+                    text = "MAL Score: ${animeData.score!!}",
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.labelSmall,
                     fontStyle = FontStyle.Italic
