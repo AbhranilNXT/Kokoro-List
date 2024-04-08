@@ -2,14 +2,11 @@ package com.example.internshiptask.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.internshiptask.data.local.UiState
-import com.example.internshiptask.data.model.main.Data
-import com.example.internshiptask.data.model.main.JikanApi
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.data.model.details.Details
 import com.example.internshiptask.data.repo.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject

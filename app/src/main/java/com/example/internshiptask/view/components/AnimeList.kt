@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.internshiptask.data.local.UiState
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.vm.AnimeSearchViewModel
 
 @Composable

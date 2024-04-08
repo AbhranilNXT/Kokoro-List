@@ -3,6 +3,7 @@ package com.example.internshiptask.view.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,9 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.internshiptask.R
-import com.example.internshiptask.data.local.UiState
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.data.model.details.Details
 import com.example.internshiptask.view.components.AppBar
+import com.example.internshiptask.view.components.RoundedButton
 import com.example.internshiptask.view.components.ShimmerImage
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.example.internshiptask.vm.DetailsViewModel
@@ -146,10 +148,6 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1)
-            Text(text = "Studio: $studio",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
             Text(text = "Episodes: ${animeData.episodes!!}",
                 style = MaterialTheme.typography.bodyMedium,
                 overflow = TextOverflow.Ellipsis,
@@ -172,7 +170,8 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 maxLines = 1)
             Spacer(modifier = Modifier.height(4.dp))
 
-            Surface(modifier = Modifier.height(localDimensions.heightPixels.dp.times(0.09f))
+            Surface(modifier = Modifier
+                .height(localDimensions.heightPixels.dp.times(0.09f))
                 .padding(4.dp),
                 shape = RectangleShape,
                 border = BorderStroke(1.dp, Color.Black)
@@ -186,6 +185,10 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 }
             }
 
+        }
+        Row(modifier = Modifier.padding(4.dp),
+            horizontalArrangement = Arrangement.SpaceAround) {
+            RoundedButton()
         }
     }
 }

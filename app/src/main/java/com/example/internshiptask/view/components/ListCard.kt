@@ -62,7 +62,7 @@ fun ListCard(anime: MAnime = MAnime(
             Row(horizontalArrangement = Arrangement.Center) {
 
                 Image(painter = rememberAsyncImagePainter(model = "https://cdn.myanimelist.net/images/anime/13/17405l.jpg"),
-                    contentDescription = "book image",
+                    contentDescription = "anime image",
                     modifier = Modifier
                         .height(140.dp)
                         .width(100.dp)
@@ -93,7 +93,7 @@ fun ListCard(anime: MAnime = MAnime(
             verticalAlignment = Alignment.Bottom) {
             Spacer(modifier = Modifier.width(120.dp))
 
-            RoundedButton(label = "Reading",
+            RoundedButton(label = "Watching",
                 radius = 50)
 
         }

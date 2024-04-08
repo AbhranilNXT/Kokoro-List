@@ -1,7 +1,6 @@
 package com.example.internshiptask.data.repo
 
-import com.example.internshiptask.data.local.UiState
-import com.example.internshiptask.data.model.main.Data
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.data.model.main.JikanApi
 import com.example.internshiptask.data.model.details.Details
 import com.example.internshiptask.data.remote.AnimeApi

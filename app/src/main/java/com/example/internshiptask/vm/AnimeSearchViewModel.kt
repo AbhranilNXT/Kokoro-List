@@ -1,9 +1,8 @@
 package com.example.internshiptask.vm
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.internshiptask.data.local.UiState
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.data.model.main.JikanApi
 import com.example.internshiptask.data.repo.AnimeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

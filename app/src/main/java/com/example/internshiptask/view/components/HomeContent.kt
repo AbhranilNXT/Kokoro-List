@@ -69,15 +69,15 @@ fun HomeContent(navController: NavController) {
 
         WatchingRightNowArea(anime = listOf(), navController = navController)
         
-        TitleSection(label = "Reading List")
+        TitleSection(label = "Watching List")
 
-        BookListArea(listOfAnime = listOfAnime, navController)
+        AnimeListArea(listOfAnime = listOfAnime, navController)
     }
 }
 
 @Composable
-fun BookListArea(listOfAnime: List<MAnime>,
-                 navController: NavController) {
+fun AnimeListArea(listOfAnime: List<MAnime>,
+                  navController: NavController) {
     HorizontalScrollableComponent(listOfAnime) {
         //TODO: Navigate to detail screen
     }

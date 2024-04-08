@@ -16,7 +16,7 @@ fun FABContent(onTap: () -> Unit) {
         shape = RoundedCornerShape(50.dp),
         containerColor = Color(0xFF92CBDF)
     ) {
-        Icon(imageVector = Icons.Default.Add, contentDescription = "Add a Book",
+        Icon(imageVector = Icons.Default.Add, contentDescription = "Add an Anime",
             tint = Color.White)
     }
 }

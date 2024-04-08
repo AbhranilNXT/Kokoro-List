@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun RoundedButton(
-    label: String = "Reading",
+    label: String = "Watching",
     radius: Int = 29,
     onPress: () -> Unit = {}
 ) {
