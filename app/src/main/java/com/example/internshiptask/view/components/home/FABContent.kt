@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.home
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons

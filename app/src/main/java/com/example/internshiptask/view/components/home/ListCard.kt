@@ -1,6 +1,5 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,21 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import com.example.internshiptask.data.model.main.MAnime
+import com.example.internshiptask.view.components.core.RoundedButton
+import com.example.internshiptask.view.components.core.ShimmerImage
 
 
-@Preview
 @Composable
-fun ListCard(anime: MAnime = MAnime(
-    "a1010",
-    "Jujutsu Kaisen",
-    "Gege Akutami",
-    "itadori yuujiii"
-),
+fun ListCard(anime: MAnime,
              onPressDetails: (String) -> Unit = {}) {
     val context = LocalContext.current
     val resources = context.resources
@@ -60,13 +52,13 @@ fun ListCard(anime: MAnime = MAnime(
         Column(modifier = Modifier.width(screenWidth.dp - (spacing * 2)),
             horizontalAlignment = Alignment.Start) {
             Row(horizontalArrangement = Arrangement.Center) {
-
-                Image(painter = rememberAsyncImagePainter(model = "https://cdn.myanimelist.net/images/anime/13/17405l.jpg"),
-                    contentDescription = "anime image",
+                
+                ShimmerImage(imgUrl = anime.imgUrl.toString(),
                     modifier = Modifier
                         .height(140.dp)
                         .width(100.dp)
                         .padding(4.dp))
+
                 Spacer(modifier = Modifier.width(50.dp))
 
                 Column(modifier = Modifier.padding(top = 25.dp),
@@ -91,7 +83,7 @@ fun ListCard(anime: MAnime = MAnime(
 
         Row(horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Bottom) {
-            Spacer(modifier = Modifier.width(120.dp))
+            Spacer(modifier = Modifier.width(112.dp))
 
             RoundedButton(label = "Watching",
                 radius = 50)

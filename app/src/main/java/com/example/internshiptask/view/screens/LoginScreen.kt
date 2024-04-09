@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.internshiptask.view.components.AppLogo
-import com.example.internshiptask.view.components.UserForm
+import com.example.internshiptask.view.components.core.AppLogo
+import com.example.internshiptask.view.components.login.UserForm
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.example.internshiptask.vm.LoginViewModel
 

@@ -1,5 +1,6 @@
 package com.example.internshiptask.view.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,11 +38,16 @@ import androidx.navigation.NavController
 import com.example.internshiptask.R
 import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.data.model.details.Details
-import com.example.internshiptask.view.components.AppBar
-import com.example.internshiptask.view.components.RoundedButton
-import com.example.internshiptask.view.components.ShimmerImage
+import com.example.internshiptask.data.model.main.MAnime
+import com.example.internshiptask.view.components.core.AppBar
+import com.example.internshiptask.view.components.core.RoundedButton
+import com.example.internshiptask.view.components.core.ShimmerImage
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.example.internshiptask.vm.DetailsViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun DetailsScreen(navController: NavController, animeId: Int,
@@ -97,6 +103,11 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
     val localDimensions = LocalContext.current.resources.displayMetrics
     val animeData = data.data.data
     val animeId = animeData.mal_id
+
+    val title = if (data.data.data.title_english != null)
+        animeData.title_english
+    else animeData.title
+
     val imgUrl = if(!animeData.images.jpg.large_image_url.isNullOrEmpty())
         animeData.images.jpg.large_image_url
     else R.string.img404url
@@ -137,7 +148,7 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 thickness = 3.dp,
                 color = Color.LightGray)
 
-            Text(text = animeData.title,
+            Text(text = title.toString(),
                 style = MaterialTheme.typography.titleLarge,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 3,
@@ -186,9 +197,67 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
             }
 
         }
-        Row(modifier = Modifier.padding(4.dp),
-            horizontalArrangement = Arrangement.SpaceAround) {
-            RoundedButton()
+    }
+    Row(modifier = Modifier.padding(4.dp),
+        horizontalArrangement = Arrangement.SpaceAround) {
+        RoundedButton(label = "Save"){
+            val anime = MAnime(
+                title = title.toString(),
+                studio = studio,
+                episodes = animeData?.episodes.toString(),
+                year = year.toString(),
+                status = animeData?.status.toString(),
+                malscore = animeData?.score,
+                genres = genre0,
+                synopsis = animeData?.synopsis.toString(),
+                notes = "",
+                imgUrl = imgUrl.toString(),
+                rating = 0.0,
+                malId = animeId,
+                userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+            )
+            saveToFirebase(anime, navController)
+//            saveToFirebaseRealtime(anime,navController)
         }
+        Spacer(modifier = Modifier.width(25.dp))
+        RoundedButton(label = "Cancel"){
+            navController.popBackStack()
+        }
+    }
+}
+
+
+fun saveToFirebase(anime: MAnime, navController: NavController) {
+    val db = FirebaseFirestore.getInstance()
+    val dbCollection = db.collection("anime")
+
+    if(anime.toString().isNotEmpty()) {
+        dbCollection.add(anime)
+            .addOnSuccessListener {
+                val docId = it.id
+                dbCollection.document(docId).update(hashMapOf("id" to docId) as Map<String, Any>)
+                    .addOnCompleteListener {
+                        if(it.isSuccessful) {
+                            navController.popBackStack()
+                        }
+                    }
+                    .addOnFailureListener {
+                        Log.d("Error FB", "Error updating doc", it)
+                    }
+            }
+    }
+}
+
+
+fun saveToFirebaseRealtime(anime: MAnime, navController: NavController) {
+    val db = Firebase.database
+    val dbCollection = db.getReference("anime")
+
+    if (anime.toString().isNotEmpty()) {
+        dbCollection.child("${anime.userId}").child("${anime.malId}").setValue(anime)
+            .addOnSuccessListener {
+                navController.popBackStack()
+            }
+
     }
 }

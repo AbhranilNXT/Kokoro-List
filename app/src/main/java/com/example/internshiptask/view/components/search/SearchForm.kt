@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.text.KeyboardActions
@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.example.internshiptask.view.components.core.InputField
 import com.example.internshiptask.vm.AnimeSearchViewModel
 
 @Composable

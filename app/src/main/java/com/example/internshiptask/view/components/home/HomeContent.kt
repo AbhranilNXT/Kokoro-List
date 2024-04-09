@@ -1,5 +1,6 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.home
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -14,32 +15,50 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.internshiptask.data.model.main.MAnime
+import com.example.internshiptask.data.utils.UiState
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
+import com.example.internshiptask.vm.HomeScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun HomeContent(navController: NavController) {
+fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel()) {
 
     val currentUserName = if(!FirebaseAuth.getInstance().currentUser?.email.isNullOrEmpty())
         FirebaseAuth.getInstance().currentUser?.email?.split("@")?.get(0)
     else "N/A"
 
-    val listOfAnime = listOf(
-        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null),
-        MAnime("saa11w", "Kaisen", "Mappa", null),
-        MAnime("saa11w", "Jujutsu", "Mappa", null),
-        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null),
-        MAnime("saa11w", "Jujutsu Kaisen", "Mappa", null)
-    )
+    var listOfAnime = emptyList<MAnime>()
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
+    val animeData = viewModel.data.collectAsState().value
+    when(animeData)
+    {
+        is UiState.Idle -> {
+            viewModel.getAllAnime()
+        }
+        is UiState.Loading -> {
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+        }
+        is UiState.Success -> {
+            listOfAnime = animeData.data.toList().filter {
+                it.userId == currentUser?.uid.toString()
+            }
+            Log.d("Anime" ,"Home Content: ${listOfAnime}")
+        }
+        else -> {}
+    }
 
 
     Column(modifier = Modifier.padding(2.dp),
@@ -67,7 +86,7 @@ fun HomeContent(navController: NavController) {
 
         }
 
-        WatchingRightNowArea(anime = listOf(), navController = navController)
+        WatchingRightNowArea(anime = listOfAnime, navController = navController)
         
         TitleSection(label = "Watching List")
 
@@ -79,7 +98,7 @@ fun HomeContent(navController: NavController) {
 fun AnimeListArea(listOfAnime: List<MAnime>,
                   navController: NavController) {
     HorizontalScrollableComponent(listOfAnime) {
-        //TODO: Navigate to detail screen
+        navController.navigate(InternshipTaskScreens.UpdateScreen.route +"/$it")
     }
 }
 
@@ -92,7 +111,7 @@ fun HorizontalScrollableComponent(listOfAnime: List<MAnime>, onCardPressed: (Str
         .horizontalScroll(scrollableState)) {
         for (anime in listOfAnime) {
             ListCard(anime) {
-                onCardPressed(it)
+                onCardPressed(anime.malId.toString())
             }
         }
     }

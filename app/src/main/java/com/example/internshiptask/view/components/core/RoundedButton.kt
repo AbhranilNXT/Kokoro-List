@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.core
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun RoundedButton(
     label: String = "Watching",
-    radius: Int = 29,
+    radius: Int = 50,
     onPress: () -> Unit = {}
 ) {
     Surface(modifier = Modifier.clip(RoundedCornerShape(

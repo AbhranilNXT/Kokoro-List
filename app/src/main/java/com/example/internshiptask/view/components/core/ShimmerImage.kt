@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.core
 
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat

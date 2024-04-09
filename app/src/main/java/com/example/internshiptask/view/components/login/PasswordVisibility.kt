@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.login
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility

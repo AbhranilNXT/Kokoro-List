@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.internshiptask.R
 import com.example.internshiptask.data.model.main.Data
+import com.example.internshiptask.view.components.core.ShimmerImage
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 
 @Composable

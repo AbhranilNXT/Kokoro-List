@@ -2,7 +2,9 @@ package com.example.internshiptask.di
 
 import com.example.internshiptask.data.remote.AnimeApi
 import com.example.internshiptask.data.repo.AnimeRepository
+import com.example.internshiptask.data.repo.FireRepository
 import com.example.internshiptask.data.utils.Constants
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +20,11 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAnimeRepository(api: AnimeApi) = AnimeRepository(api)
+
+    @Singleton
+    @Provides
+    fun provideFireRepository() = FireRepository(queryAnime = FirebaseFirestore.getInstance()
+        .collection("anime"))
 
 
     @Singleton

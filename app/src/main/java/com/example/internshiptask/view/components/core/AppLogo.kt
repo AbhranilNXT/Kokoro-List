@@ -1,4 +1,4 @@
-package com.example.internshiptask.view.components
+package com.example.internshiptask.view.components.core
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme

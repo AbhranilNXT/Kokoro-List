@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.internshiptask.view.components.AnimeList
-import com.example.internshiptask.view.components.AppBar
-import com.example.internshiptask.view.components.SearchForm
+import com.example.internshiptask.view.components.search.AnimeList
+import com.example.internshiptask.view.components.core.AppBar
+import com.example.internshiptask.view.components.search.SearchForm
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
 import com.example.internshiptask.vm.AnimeSearchViewModel
 

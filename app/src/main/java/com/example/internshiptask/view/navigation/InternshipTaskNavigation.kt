@@ -16,6 +16,7 @@ import com.example.internshiptask.view.screens.SplashScreen
 import com.example.internshiptask.view.screens.StatsScreen
 import com.example.internshiptask.view.screens.UpdateScreen
 import com.example.internshiptask.vm.AnimeSearchViewModel
+import com.example.internshiptask.vm.HomeScreenViewModel
 
 @Composable
 fun InternshipTaskNavigation() {
@@ -32,7 +33,8 @@ fun InternshipTaskNavigation() {
         }
 
         composable(InternshipTaskScreens.HomeScreen.route) {
-            HomeScreen(navController = navController)
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            HomeScreen(navController = navController, viewModel = homeViewModel)
         }
 
         composable(InternshipTaskScreens.CreateAccountScreen.route) {
@@ -55,8 +57,15 @@ fun InternshipTaskNavigation() {
             }
         }
 
-        composable(InternshipTaskScreens.UpdateScreen.route) {
-            UpdateScreen(navController = navController)
+        val updateName = InternshipTaskScreens.UpdateScreen.route
+        composable("$updateName/{malId}", arguments = listOf(navArgument("malId"){
+            type = NavType.StringType
+        })) {backStackEntry ->
+            backStackEntry.arguments?.getString("malId").let {
+                if (it != null) {
+                    UpdateScreen(navController = navController, malId = it.toString())
+                }
+            }
         }
         
         composable(InternshipTaskScreens.StatsScreen.route) {
