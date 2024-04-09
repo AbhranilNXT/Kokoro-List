@@ -30,7 +30,7 @@ fun RoundedButton(
         color = Color(0xFF92CBDF)
     ) {
         Column(modifier = Modifier
-            .width(90.dp)
+            .width(94.dp)
             .heightIn(40.dp)
             .clickable { onPress.invoke() },
             verticalArrangement = Arrangement.Center,

@@ -17,10 +17,14 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,21 +101,41 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
 @Composable
 fun AnimeListArea(listOfAnime: List<MAnime>,
                   navController: NavController) {
-    HorizontalScrollableComponent(listOfAnime) {
+
+    val addedAnime = listOfAnime.filter { mAnime->
+        mAnime.startedWatching == null && mAnime.finishedWatching == null
+    }
+
+    HorizontalScrollableComponent(addedAnime) {
         navController.navigate(InternshipTaskScreens.UpdateScreen.route +"/$it")
     }
 }
 
 @Composable
-fun HorizontalScrollableComponent(listOfAnime: List<MAnime>, onCardPressed: (String) -> Unit) {
+fun HorizontalScrollableComponent(listOfAnime: List<MAnime>,
+                                  viewModel: HomeScreenViewModel = hiltViewModel(),
+                                  onCardPressed: (String) -> Unit) {
     val scrollableState = rememberScrollState()
     Row(modifier = Modifier
         .fillMaxWidth()
         .heightIn(280.dp)
         .horizontalScroll(scrollableState)) {
-        for (anime in listOfAnime) {
-            ListCard(anime) {
-                onCardPressed(anime.malId.toString())
+
+        if(listOfAnime.isNullOrEmpty()) {
+            Surface(modifier = Modifier.padding(23.dp)) {
+                Text(text = "No Anime Found. Add an Anime",
+                    style = TextStyle(
+                        color = Color.Red.copy(0.4f),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                )
+            }
+        } else {
+            for (anime in listOfAnime) {
+                ListCard(anime) {
+                    onCardPressed(anime.malId.toString())
+                }
             }
         }
     }
