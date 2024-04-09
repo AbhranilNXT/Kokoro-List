@@ -1,6 +1,7 @@
 package com.example.internshiptask.view.screens
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,6 +25,16 @@ import com.example.internshiptask.vm.AnimeSearchViewModel
 @Composable
 fun SearchScreen(navController: NavController,
                  viewModel: AnimeSearchViewModel = hiltViewModel()) {
+
+    BackHandler {
+        navController.navigate(InternshipTaskScreens.HomeScreen.route){
+            popUpTo(InternshipTaskScreens.SearchScreen.route) {
+                inclusive = true
+                saveState = true
+            }
+        }
+    }
+
     Scaffold(topBar = {
         AppBar(
             title = "Search Anime",
@@ -31,7 +42,12 @@ fun SearchScreen(navController: NavController,
             navController = navController,
             showProfile = false
         ) {
-            navController.navigate(InternshipTaskScreens.HomeScreen.route)
+            navController.navigate(InternshipTaskScreens.HomeScreen.route){
+                popUpTo(InternshipTaskScreens.SearchScreen.route) {
+                    inclusive = true
+                    saveState = true
+                }
+            }
         }
     }) {
         Surface(modifier = Modifier.padding(paddingValues = it)) {
