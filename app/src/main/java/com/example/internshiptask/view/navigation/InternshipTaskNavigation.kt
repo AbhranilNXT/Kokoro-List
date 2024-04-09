@@ -69,7 +69,8 @@ fun InternshipTaskNavigation() {
         }
         
         composable(InternshipTaskScreens.StatsScreen.route) {
-            StatsScreen(navController = navController)
+            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
+            StatsScreen(navController = navController, viewModel = homeViewModel)
         }
     }
 }

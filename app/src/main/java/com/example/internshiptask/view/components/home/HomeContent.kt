@@ -21,6 +21,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -71,7 +72,8 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
         Row {
             TitleSection(label = "Your watching\n"+"activity right now..")
 
-            Column {
+            Column(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "Profile Icon",
                     Modifier
                         .clickable {
@@ -85,7 +87,8 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
                     fontSize = 15.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Clip)
-                HorizontalDivider(Modifier.padding(end = 27.dp))
+                HorizontalDivider(Modifier.fillMaxWidth()
+                    .padding(start = 8.dp, end = 8.dp))
             }
 
         }

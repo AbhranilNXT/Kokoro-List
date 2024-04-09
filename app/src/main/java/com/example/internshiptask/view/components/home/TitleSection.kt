@@ -27,7 +27,7 @@ fun TitleSection(modifier: Modifier = Modifier,
                 fontStyle = FontStyle.Normal,
                 textAlign = TextAlign.Left)
 
-            Spacer(modifier = Modifier.fillMaxWidth(0.7f))
+            Spacer(modifier = Modifier.fillMaxWidth(0.6f))
         }
     }
 }
