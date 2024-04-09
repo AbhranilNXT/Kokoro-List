@@ -70,7 +70,7 @@ fun ListCard(anime: MAnime,
                         contentDescription = "Fav Icon",
                         modifier = Modifier.padding(bottom = 1.dp))
 
-                    AnimeRating(score = 3.5)
+                    AnimeRating(score = anime.rating?.toInt()!!)
                 }
 
             }

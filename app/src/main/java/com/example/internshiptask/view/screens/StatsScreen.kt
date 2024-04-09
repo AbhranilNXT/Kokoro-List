@@ -3,10 +3,12 @@ package com.example.internshiptask.view.screens
 
 import android.util.Log
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.sharp.Person
+import androidx.compose.material.icons.sharp.ThumbUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -32,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,6 +46,7 @@ import com.example.internshiptask.R
 import com.example.internshiptask.data.model.main.Data
 import com.example.internshiptask.data.model.main.MAnime
 import com.example.internshiptask.data.utils.UiState
+import com.example.internshiptask.data.utils.formatDate
 import com.example.internshiptask.view.components.core.AppBar
 import com.example.internshiptask.view.components.core.ShimmerImage
 import com.example.internshiptask.view.navigation.InternshipTaskScreens
@@ -157,11 +162,17 @@ fun AnimeRowStats(animeData: MAnime) {
                 .padding(end = 4.dp))
 
             Column {
-
-                Text(
-                    text = animeData.title.toString(),
-                    overflow = TextOverflow.Ellipsis
-                )
+                Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(
+                        text = animeData.title.toString(),
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    if(animeData.rating!! >= 4.0) {
+                        Spacer(modifier = Modifier.fillMaxWidth(0.8f))
+                        Icon(imageVector = Icons.Sharp.ThumbUp, contentDescription = "Thumbs Up",
+                            tint = Color.Green.copy(alpha = 0.5f))
+                    } else {Box{}}
+                }
                 Text(
                     text = "Studio: ${animeData.studio}",
                     overflow = TextOverflow.Clip,
@@ -169,19 +180,15 @@ fun AnimeRowStats(animeData: MAnime) {
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = "Episodes: ${animeData.episodes!!}",
+                    text = "Started: ${formatDate(animeData.startedWatching!!)}",
+                    softWrap = true,
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.labelSmall,
                     fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = "Released: ${animeData.year}",
-                    overflow = TextOverflow.Clip,
-                    style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
-                )
-                Text(
-                    text = "Status: ${animeData.status!!}",
+                    text = "Finished: ${formatDate(animeData.finishedWatching!!)}",
+                    softWrap = true,
                     overflow = TextOverflow.Clip,
                     style = MaterialTheme.typography.labelSmall,
                     fontStyle = FontStyle.Italic

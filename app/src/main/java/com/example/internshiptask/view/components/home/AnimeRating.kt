@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AnimeRating(score: Double = 4.5) {
+fun AnimeRating(score: Int = 0) {
     Surface(modifier = Modifier
         .height(70.dp)
         .padding(4.dp),
