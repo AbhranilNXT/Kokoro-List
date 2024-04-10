@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,8 +32,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
+import com.abhranilnxt.kokorolist.ui.theme.baseColor
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
 import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
+import com.google.common.math.Quantiles.scale
 import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,6 +45,7 @@ fun AppBar(
     title: String,
     icon: ImageVector? = null,
     showProfile: Boolean = true,
+    showStats: Boolean = false,
     navController: NavController,
     onBackArrowClicked:() -> Unit = {}
 ) {
@@ -54,38 +59,51 @@ fun AppBar(
                           }
                           if(icon!=null) {
                               Icon(imageVector = icon, contentDescription = "arrow back",
-                                  tint = Color.Red.copy(0.7f),
+                                  tint = highlightColor,
                                   modifier = Modifier.clickable { onBackArrowClicked.invoke() })
                           }
                           Spacer(modifier = Modifier.width(40.dp))
 
                           Text(text = title,
                               color = Color.White,
-                              style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                              style = TextStyle(fontSize = 28.sp),
                               fontFamily = poppinsFamily, fontWeight = FontWeight.Bold
                           )
 
                       }
     },
         actions = {
-                  IconButton(onClick = {
-                      FirebaseAuth.getInstance().signOut().run {
-                          navController.navigate(KokoroListScreens.LoginScreen.route){
-                              popUpTo(KokoroListScreens.HomeScreen.route){
-                                  inclusive = true
-                                  saveState = true
+                  IconButton(modifier = Modifier.shadow(elevation = 4.dp), onClick = {
+                      if(showStats) {
+                          FirebaseAuth.getInstance().signOut().run {
+                              navController.navigate(KokoroListScreens.LoginScreen.route){
+                                  popUpTo(KokoroListScreens.HomeScreen.route){
+                                      inclusive = true
+                                      saveState = true
+                                  }
                               }
                           }
+                      } else if(showProfile) {
+                          navController.navigate(KokoroListScreens.StatsScreen.route)
                       }
+
                   }) {
-                      if(showProfile) Row {
+                      if(showStats) Row {
                           Icon(painter = painterResource(id = R.drawable.log_out_icon),
                               contentDescription = "log out button",
+                              tint = highlightColor,
                               modifier = Modifier.scale(0.7f))
-                      } else Box{}
+                      }
+                      else if(showProfile) Row {
+                          Icon(imageVector = Icons.Filled.AccountCircle, contentDescription = "account logo",
+                              tint = highlightColor,
+                              modifier = Modifier.size(64.dp)
+                          )
+                      }
+                      else Box{}
                   }
         }, colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color(0xFF050D1C)
+            containerColor = Color(0xFF030710)
         ), modifier = Modifier.shadow(0.dp)
     )
 }

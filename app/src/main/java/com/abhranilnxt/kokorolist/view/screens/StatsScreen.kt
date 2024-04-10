@@ -2,6 +2,7 @@ package com.abhranilnxt.kokorolist.view.screens
 
 
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,6 +54,7 @@ import java.util.Locale
 
 @Composable
 fun StatsScreen(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel()) {
+
     var listOfAnime: List<MAnime> = emptyList()
     val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -61,13 +63,9 @@ fun StatsScreen(navController: NavController, viewModel: HomeScreenViewModel = h
             AppBar(title = "Anime Stats",
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
                 showProfile = false,
+                showStats = true,
                 navController = navController) {
-                navController.navigate(KokoroListScreens.HomeScreen.route) {
-                    popUpTo(KokoroListScreens.StatsScreen.route) {
-                        inclusive = true
-                        saveState = true
-                    }
-                }
+                navController.popBackStack()
             }
         }
     ) {
