@@ -27,10 +27,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.abhranilnxt.kokorolist" />
+                  <option name="mobileSdkAppId" value="1:787301798801:android:7d6c93c9cab81863cd0030" />
+                  <option name="projectId" value="kokoro-list" />
+                  <option name="projectNumber" value="787301798801" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
