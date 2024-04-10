@@ -17,7 +17,7 @@ import com.abhranilnxt.kokorolist.vm.HomeScreenViewModel
 @Composable
 fun HomeScreen(navController: NavController, viewModel:HomeScreenViewModel =  hiltViewModel()) {
     Scaffold(topBar = {
-                      AppBar(title = "Anime Watchlist", navController = navController)
+                      AppBar(title = "Kokoro List", navController = navController)
     }, floatingActionButton = {
         FABContent {
             navController.navigate(KokoroListScreens.SearchScreen.route)
