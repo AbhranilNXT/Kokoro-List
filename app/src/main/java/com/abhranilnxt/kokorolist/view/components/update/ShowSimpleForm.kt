@@ -57,7 +57,7 @@ fun ShowSimpleForm(anime: MAnime, navController: NavController) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start) {
         TextButton(onClick = {
-            isStartedWatching.value = true
+            isStartedWatching.value = !isStartedWatching.value
         },
             enabled = anime.startedWatching == null) {
             if (anime.startedWatching == null) {
@@ -77,7 +77,7 @@ fun ShowSimpleForm(anime: MAnime, navController: NavController) {
         }
         Spacer(modifier = Modifier.height(4.dp))
         TextButton(onClick = { isFinishedWatching.value = !isFinishedWatching.value },
-            enabled = anime.finishedWatching == null ) {
+            enabled = anime.finishedWatching == null && anime.startedWatching != null) {
             if (anime.finishedWatching == null) {
                 if(!isFinishedWatching.value)
                     Text(text = "Mark as Watched")
