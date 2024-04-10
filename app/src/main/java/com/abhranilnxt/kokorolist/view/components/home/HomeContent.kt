@@ -38,8 +38,7 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
     var listOfAnime = emptyList<MAnime>()
     val currentUser = FirebaseAuth.getInstance().currentUser
 
-    val animeData = viewModel.data.collectAsState().value
-    when(animeData)
+    when(val animeData = viewModel.data.collectAsState().value)
     {
         is UiState.Idle -> {
             viewModel.getAllAnime()
@@ -51,7 +50,7 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
             listOfAnime = animeData.data.toList().filter {
                 it.userId == currentUser?.uid.toString()
             }
-            Log.d("Anime" ,"Home Content: ${listOfAnime}")
+            Log.d("Anime" ,"Home Content: $listOfAnime")
         }
         else -> {}
     }
@@ -86,9 +85,10 @@ fun AnimeListArea(listOfAnime: List<MAnime>,
 }
 
 @Composable
-fun HorizontalScrollableComponent(listOfAnime: List<MAnime>,
-                                  viewModel: HomeScreenViewModel = hiltViewModel(),
-                                  onCardPressed: (String) -> Unit) {
+fun HorizontalScrollableComponent(
+    listOfAnime: List<MAnime>,
+    onCardPressed: (String) -> Unit
+) {
     val scrollableState = rememberScrollState()
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
