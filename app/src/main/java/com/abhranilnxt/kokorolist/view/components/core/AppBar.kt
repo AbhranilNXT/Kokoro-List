@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
+import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 import com.google.firebase.auth.FirebaseAuth
 
@@ -46,7 +47,7 @@ fun AppBar(
     TopAppBar(title = {
                       Row(verticalAlignment = Alignment.CenterVertically) {
                           if(showProfile){
-                              Icon(painter = painterResource(id = R.drawable.star_icon), contentDescription = "app logo",
+                              Icon(painter = painterResource(id = R.drawable.star_icon), contentDescription = "star icon",
                                   tint = Color(0xFF5E8DCF),
                                   modifier = Modifier.size(28.dp)
                               )
@@ -59,8 +60,9 @@ fun AppBar(
                           Spacer(modifier = Modifier.width(40.dp))
 
                           Text(text = title,
-                              color = Color.Red.copy(0.7f),
-                              style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                              color = Color.White,
+                              style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+                              fontFamily = poppinsFamily, fontWeight = FontWeight.Bold
                           )
 
                       }
@@ -83,7 +85,7 @@ fun AppBar(
                       } else Box{}
                   }
         }, colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.Transparent
+            containerColor = Color(0xFF050D1C)
         ), modifier = Modifier.shadow(0.dp)
     )
 }
