@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,7 +35,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androi
             verticalArrangement = Arrangement.Top) {
             AppLogo(modifier = Modifier.padding(top = 24.dp))
 
-            if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false) { email, pwd ->
+            if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false,navController) { email, pwd ->
                 viewModel.signInWithEmailPass(email, pwd){
                     navController.navigate(InternshipTaskScreens.HomeScreen.route){
                         popUpTo(InternshipTaskScreens.LoginScreen.route){
@@ -45,7 +46,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androi
                 }
             }
             else {
-                UserForm(loading = false, isCreateAccount = true) { email, pwd ->
+                UserForm(loading = false, isCreateAccount = true, navController) { email, pwd ->
                     viewModel.createUserWithEmailPass(email, pwd) {
                         navController.navigate(InternshipTaskScreens.HomeScreen.route){
                             popUpTo(InternshipTaskScreens.LoginScreen.route){
@@ -64,6 +65,7 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androi
 
                 val text = if(showLoginForm.value) "Sign Up" else "Login"
                 val userText = if(showLoginForm.value) "New User?" else "Existing User?"
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(text = userText)
                 Text(text = text,
                     modifier = Modifier

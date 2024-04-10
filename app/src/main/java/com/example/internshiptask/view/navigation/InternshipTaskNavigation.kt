@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.internshiptask.view.screens.CreateAccountScreen
+import com.example.internshiptask.view.screens.ResetPasswordScreen
 import com.example.internshiptask.view.screens.DetailsScreen
 import com.example.internshiptask.view.screens.HomeScreen
 import com.example.internshiptask.view.screens.LoginScreen
@@ -37,8 +37,8 @@ fun InternshipTaskNavigation() {
             HomeScreen(navController = navController, viewModel = homeViewModel)
         }
 
-        composable(InternshipTaskScreens.CreateAccountScreen.route) {
-            CreateAccountScreen(navController = navController)
+        composable(InternshipTaskScreens.ResetPasswordScreen.route) {
+            ResetPasswordScreen(navController = navController)
         }
 
         composable(InternshipTaskScreens.SearchScreen.route) {

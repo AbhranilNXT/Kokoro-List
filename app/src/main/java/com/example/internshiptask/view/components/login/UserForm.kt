@@ -1,7 +1,12 @@
 package com.example.internshiptask.view.components.login
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -19,14 +24,18 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.internshiptask.R
 import com.example.internshiptask.data.utils.isValidEmail
+import com.example.internshiptask.view.navigation.InternshipTaskScreens
 
 @Composable
 fun UserForm(
     loading: Boolean = false,
     isCreateAccount: Boolean = false,
+    navController: NavController,
     onDone: (String, String) -> Unit = { email, pwd ->}
 ) {
     val email = rememberSaveable { mutableStateOf("") }
@@ -64,6 +73,17 @@ fun UserForm(
                 if (!valid) return@KeyboardActions
                 onDone(email.value.trim(), password.value.trim())
             })
+        Row(horizontalArrangement = Arrangement.End) {
+            Spacer(modifier = Modifier.fillMaxWidth(0.6f))
+            Text(text = "Reset Password",
+                modifier = Modifier
+                    .clickable {
+                        navController.navigate(InternshipTaskScreens.ResetPasswordScreen.route)
+                    }
+                    .padding(start = 4.dp),
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.secondary)
+        }
 
         SubmitButton(
             textId = if (isCreateAccount) "Create Account" else "Login",
