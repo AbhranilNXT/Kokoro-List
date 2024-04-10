@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.internshiptask"
+    namespace = "com.abhranilnxt.kokorolist"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.internshiptask"
+        applicationId = "com.abhranilnxt.kokorolist"
         minSdk = 28
         targetSdk = 34
         versionCode = 1

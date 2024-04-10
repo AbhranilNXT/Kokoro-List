@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "InternshipTask"
+rootProject.name = "KokoroList"
 include(":app")
  

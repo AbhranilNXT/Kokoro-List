@@ -1,22 +1,22 @@
 {
   "project_info": {
-    "project_number": "450019451027",
-    "firebase_url": "https://internship-task-8adaf-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "project_id": "internship-task-8adaf",
-    "storage_bucket": "internship-task-8adaf.appspot.com"
+    "project_number": "787301798801",
+    "firebase_url": "https://kokoro-list-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "kokoro-list",
+    "storage_bucket": "kokoro-list.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:450019451027:android:ab6a146a140677feb3ed66",
+        "mobilesdk_app_id": "1:787301798801:android:7d6c93c9cab81863cd0030",
         "android_client_info": {
-          "package_name": "com.example.internshiptask"
+          "package_name": "com.abhranilnxt.kokorolist"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAWEbvv5kP97PJzHxqgYuh8A6ExM-J9Dgs"
+          "current_key": "AIzaSyDVIv3Mry4CgZi111nagkFG5h_CIOI4hf0"
         }
       ],
       "services": {
