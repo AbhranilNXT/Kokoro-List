@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -44,10 +46,10 @@ fun AppBar(
     TopAppBar(title = {
                       Row(verticalAlignment = Alignment.CenterVertically) {
                           if(showProfile){
-                              Icon(imageVector = Icons.Default.Favorite, contentDescription = "fav icon",
-                                  modifier = Modifier
-                                      .clip(RoundedCornerShape(12.dp))
-                                      .scale(0.9f))
+                              Icon(painter = painterResource(id = R.drawable.star_icon), contentDescription = "app logo",
+                                  tint = Color(0xFF5E8DCF),
+                                  modifier = Modifier.size(28.dp)
+                              )
                           }
                           if(icon!=null) {
                               Icon(imageVector = icon, contentDescription = "arrow back",
