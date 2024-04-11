@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +55,7 @@ import com.abhranilnxt.kokorolist.ui.theme.primaryColor
 import com.abhranilnxt.kokorolist.view.components.core.AppBar
 import com.abhranilnxt.kokorolist.view.components.core.RoundedButton
 import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
+import com.abhranilnxt.kokorolist.view.components.core.YoutubePlayer
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 import com.abhranilnxt.kokorolist.vm.DetailsViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -245,6 +247,13 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 }
 
             }
+
+            if(!animeData.trailer.youtube_id.isNullOrEmpty()) {
+                YoutubePlayer(youtubeId = animeData.trailer.youtube_id,
+                    lifecycleOwner = LocalLifecycleOwner.current)
+            }
+
+
             HorizontalDivider(modifier = Modifier.padding(4.dp),
                 thickness = 2.dp,
                 color = highlightColor)

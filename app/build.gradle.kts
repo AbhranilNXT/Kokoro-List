@@ -126,4 +126,7 @@ dependencies {
     //Lottie
     val lottieVersion = "6.4.0"
     implementation("com.airbnb.android:lottie-compose:$lottieVersion")
+
+    //Youtube Embed
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
 }
