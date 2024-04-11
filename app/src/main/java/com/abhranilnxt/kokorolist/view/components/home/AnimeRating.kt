@@ -39,7 +39,8 @@ fun AnimeRating(score: Int = 0) {
             Text(text = score.toString(),
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Light,
-                fontSize = 17.sp)
+                fontSize = 15.sp,
+                color = Color.White)
             if(score<4)
             {
                 Icon(imageVector = Icons.Filled.StarBorder, contentDescription = "Star",

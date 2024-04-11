@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -55,9 +56,14 @@ fun HomeContent(navController: NavController, viewModel: HomeScreenViewModel = h
         else -> {}
     }
 
+    val scrollableState = rememberScrollState()
 
-    Column(modifier = Modifier.padding(top = 100.dp, bottom = 2.dp, start = 16.dp, end = 2.dp),
+
+    Column(modifier = Modifier.padding(top = 16.dp, bottom = 2.dp, start = 16.dp, end = 2.dp)
+        .verticalScroll(scrollableState),
         verticalArrangement = Arrangement.Top) {
+
+        Spacer(modifier = Modifier.height(84.dp))
 
         TitleSection(label = "Currently Watching...")
 
