@@ -1,5 +1,6 @@
 package com.abhranilnxt.kokorolist.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhranilnxt.kokorolist.data.model.main.MAnime
@@ -28,7 +29,7 @@ class HomeScreenViewModel @Inject constructor(private val repository: FireReposi
                 _data.value = repository.getAllAnimeFromFireStore()
             }
             catch (e: Exception) {
-                //Todo: Handle error
+                Log.e("Error", e.message.toString())
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.abhranilnxt.kokorolist.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhranilnxt.kokorolist.data.utils.UiState
@@ -28,7 +29,7 @@ class AnimeSearchViewModel @Inject constructor(private val repository: AnimeRepo
                 _listOfAnime.value = repository.getAnime(searchQuery = query)
             }
             catch (e: Exception) {
-                //Todo: Handle error
+                Log.e("AnimeSearchViewModel", e.message.toString())
             }
         }
     }

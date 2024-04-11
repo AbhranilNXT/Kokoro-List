@@ -1,5 +1,6 @@
 package com.abhranilnxt.kokorolist.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abhranilnxt.kokorolist.data.utils.UiState
@@ -29,7 +30,7 @@ class DetailsViewModel @Inject constructor(private val repository: AnimeReposito
                 _animeInfo.value = repository.getAnimeInfo(id = animeId)
             }
             catch (e: Exception) {
-                //Todo: Handle error
+                Log.d("DetailsViewModel", "getAnimeInfo: ${e.message}")
             }
         }
     }
