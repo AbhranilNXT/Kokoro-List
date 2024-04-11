@@ -1,24 +1,30 @@
 package com.abhranilnxt.kokorolist.view.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.abhranilnxt.kokorolist.data.utils.isValidEmail
+import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.utils.showToast
 import com.abhranilnxt.kokorolist.view.components.login.EmailInput
 import com.abhranilnxt.kokorolist.view.components.login.SubmitButton
@@ -33,22 +39,35 @@ fun ResetPasswordScreen(navController: NavController) {
     val auth = Firebase.auth
     val email = rememberSaveable { mutableStateOf("") }
     val keyboardController = LocalSoftwareKeyboardController.current
-    val focusRequest = FocusRequester.Default
-    val valid = remember(email.value) {
-        email.value.trim().isNotEmpty() && isValidEmail(email.value)
-    }
+
     val modifier = Modifier
-        .height(280.dp)
-        .background(MaterialTheme.colorScheme.background)
+        .fillMaxSize()
+        .background(Color.Transparent)
         .verticalScroll(rememberScrollState())
+
+    Card(
+        modifier = Modifier
+            .fillMaxSize(),
+        shape = RectangleShape
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.login_bg),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
 
     Column(
         modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
     ) {
         EmailInput(emailState = email,
             enabled = true,
             onAction = KeyboardActions.Default)
+        
+        Spacer(modifier = Modifier.height(12.dp))
 
         SubmitButton(
             textId = "Send Reset Email",
@@ -71,5 +90,6 @@ fun ResetPasswordScreen(navController: NavController) {
                     }
                 }
         }
+        Spacer(modifier = Modifier.height(150.dp))
     }
 }

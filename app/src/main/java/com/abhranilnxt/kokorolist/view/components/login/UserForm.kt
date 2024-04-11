@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -22,13 +21,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.utils.isValidEmail
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
+import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 
 @Composable
@@ -47,8 +51,7 @@ fun UserForm(
         email.value.trim().isNotEmpty() && isValidEmail(email.value) && password.value.trim().isNotEmpty() && password.value.trim().length > 5
     }
     val modifier = Modifier
-        .height(280.dp)
-        .background(MaterialTheme.colorScheme.background)
+        .background(Color.Transparent)
         .verticalScroll(rememberScrollState())
 
     Column(
@@ -57,11 +60,25 @@ fun UserForm(
     ) {
 
         if (isCreateAccount) Text(text = stringResource(id = R.string.create_account),
-            modifier = Modifier.padding(4.dp)) else Text(text = "")
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Light,
+            fontSize = 12.sp,
+            color = Color.White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp))
+
+        else Text(text = " spacer \n spacer ",
+            color = Color.Transparent,
+            fontFamily = poppinsFamily,
+            fontWeight = FontWeight.Light,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center)
 
         EmailInput(emailState = email,
             enabled = !loading,
             onAction = KeyboardActions { passwordFocusRequest.requestFocus() })
+        
+        Spacer(modifier = Modifier.height(6.dp))
 
         PasswordInput(
             modifier = Modifier.focusRequester(passwordFocusRequest),
@@ -80,11 +97,14 @@ fun UserForm(
                     .clickable {
                         navController.navigate(KokoroListScreens.ResetPasswordScreen.route)
                     }
-                    .padding(start = 4.dp),
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.secondary)
+                    .padding(end = 14.dp),
+                fontFamily = poppinsFamily,
+                fontWeight = FontWeight.Medium,
+                color = highlightColor)
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+        
         SubmitButton(
             textId = if (isCreateAccount) "Create Account" else "Login",
             loading = loading,

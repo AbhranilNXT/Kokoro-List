@@ -57,7 +57,7 @@ fun ListCard(anime: MAnime,
                     .fillMaxWidth()
                     .fillMaxHeight(0.69f))
 
-            Text(text = anime.title.toString(), modifier = Modifier.padding(),
+            Text(text = anime.title.toString(), modifier = Modifier.padding(start = 4.dp, end = 2.dp),
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp,
