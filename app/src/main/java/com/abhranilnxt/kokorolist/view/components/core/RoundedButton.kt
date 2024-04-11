@@ -14,8 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.abhranilnxt.kokorolist.ui.theme.baseColor
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
+import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
 
 @Composable
 fun RoundedButton(
@@ -26,8 +30,8 @@ fun RoundedButton(
     Surface(modifier = Modifier.clip(RoundedCornerShape(
         bottomEndPercent = radius,
         topStartPercent = radius
-    )),
-        color = Color(0xFF92CBDF)
+    )), shadowElevation = 16.dp,
+        color = highlightColor
     ) {
         Column(modifier = Modifier
             .width(94.dp)
@@ -35,7 +39,11 @@ fun RoundedButton(
             .clickable { onPress.invoke() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = label, style = TextStyle(color = Color.White, fontSize = 15.sp))
+            Text(text = label,
+                fontFamily = poppinsFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = baseColor)
         }
     }
 }

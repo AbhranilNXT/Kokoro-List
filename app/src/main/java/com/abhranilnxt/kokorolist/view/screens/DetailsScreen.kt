@@ -2,6 +2,7 @@ package com.abhranilnxt.kokorolist.view.screens
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,16 +31,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.utils.UiState
 import com.abhranilnxt.kokorolist.data.model.details.Details
 import com.abhranilnxt.kokorolist.data.model.main.MAnime
+import com.abhranilnxt.kokorolist.ui.theme.baseColor
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
+import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
+import com.abhranilnxt.kokorolist.ui.theme.primaryColor
 import com.abhranilnxt.kokorolist.view.components.core.AppBar
 import com.abhranilnxt.kokorolist.view.components.core.RoundedButton
 import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
@@ -65,10 +75,24 @@ fun DetailsScreen(navController: NavController, animeId: Int,
             }
         }
     }) {
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            shape = RectangleShape
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.background),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Surface(modifier = Modifier
-            .padding(paddingValues = it)
-            .fillMaxSize()) {
+            .padding(top = 80.dp)
+            .fillMaxSize(),
+            color = Color.Transparent) {
             Column(horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top) {
 
@@ -81,9 +105,16 @@ fun DetailsScreen(navController: NavController, animeId: Int,
                     is UiState.Loading -> {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(text = "Loading....",
-                                style = MaterialTheme.typography.bodyLarge)
+                                fontFamily = poppinsFamily,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 20.sp,
+                                color = highlightColor
+                                )
                             Spacer(modifier = Modifier.height(8.dp))
-                            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                            LinearProgressIndicator(modifier = Modifier.fillMaxWidth(),
+                                color = highlightColor,
+                                trackColor = primaryColor
+                            )
                         }
                     }
                     is UiState.Success -> {
@@ -127,71 +158,107 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
         "No Info"
     else animeData.year
 
-    Card(modifier = Modifier
+    OutlinedCard(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = 16.dp, end = 16.dp),
+        .padding(16.dp),
+        colors = CardDefaults.cardColors(primaryColor),
+        border = BorderStroke(1.dp, highlightColor),
         elevation = CardDefaults.cardElevation(16.dp),
         shape = RoundedCornerShape(16.dp)) {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally){
 
-            Card(
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(4.dp)
-            ) {
-                ShimmerImage(imgUrl = imgUrl.toString(),
-                    modifier = Modifier
-                        .height(260.dp)
-                        .width(200.dp))
+            Row(modifier = Modifier.padding(4.dp),
+                verticalAlignment = Alignment.Top) {
+
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
+                ) {
+                    ShimmerImage(imgUrl = imgUrl.toString(),
+                        modifier = Modifier
+                            .height(260.dp)
+                            .fillMaxWidth(0.5f))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Column {
+                    Text(text = title.toString(),
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Medium,
+                        overflow = TextOverflow.Ellipsis,
+                        fontSize = 24.sp,
+                        maxLines = 3,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(text = "Studio: $studio",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1)
+                    Text(text = "Episodes: ${animeData.episodes!!}",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1)
+                    Text(text = "Released: $year",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1)
+                    Text(text = "Status: ${animeData.status!!}",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1)
+                    Text(text = "MAL Score: ${animeData.score!!}",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1)
+                    Text(text = "Genres: $genre0",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        style = MaterialTheme.typography.labelLarge,
+                        color = Color.White,
+                        overflow = TextOverflow.Ellipsis)
+                }
+
             }
             HorizontalDivider(modifier = Modifier.padding(4.dp),
-                thickness = 3.dp,
-                color = Color.LightGray)
+                thickness = 2.dp,
+                color = highlightColor)
 
-            Text(text = title.toString(),
-                style = MaterialTheme.typography.titleLarge,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 3,
-                fontWeight = FontWeight.SemiBold
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "Studio: $studio",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Text(text = "Episodes: ${animeData.episodes!!}",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Text(text = "Released: $year",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Text(text = "Status: ${animeData.status!!}",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Text(text = "MAL Score: ${animeData.score!!}",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Text(text = "Genres: $genre0",
-                style = MaterialTheme.typography.bodyMedium,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1)
-            Spacer(modifier = Modifier.height(4.dp))
 
             Surface(modifier = Modifier
-                .height(localDimensions.heightPixels.dp.times(0.09f))
-                .padding(4.dp),
-                shape = RectangleShape,
-                border = BorderStroke(1.dp, Color.Black)
+                .height(localDimensions.heightPixels.dp.times(0.075f))
+                .padding(8.dp),
+                shape = RoundedCornerShape(12.dp),
+                border = BorderStroke(1.dp, highlightColor),
+                color = baseColor
             ) {
                 LazyColumn(modifier = Modifier.padding(4.dp)) {
                     items(1) {
                         Text(text = "Synopsis: ${animeData.synopsis!!}",
                             style = MaterialTheme.typography.bodyLarge,
-                            overflow = TextOverflow.Ellipsis)
+                            overflow = TextOverflow.Ellipsis,
+                            color = highlightColor)
                     }
                 }
             }
