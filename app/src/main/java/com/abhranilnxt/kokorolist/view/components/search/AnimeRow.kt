@@ -1,40 +1,49 @@
 package com.abhranilnxt.kokorolist.view.components.search
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Card
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.model.main.Data
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
+import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
+import com.abhranilnxt.kokorolist.ui.theme.primaryColor
 import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 
 @Composable
 fun AnimeRow(animeData: Data, navController: NavController) {
-    Card(modifier = Modifier
+    OutlinedCard(modifier = Modifier
         .clickable {
             navController.navigate(KokoroListScreens.DetailsScreen.route + "/${animeData.mal_id}")
         }
         .fillMaxWidth()
-        .height(168.dp)
-        .padding(4.dp),
-        shape = RectangleShape,
+        .height(196.dp)
+        .padding(8.dp),
+        colors = CardDefaults.cardColors(primaryColor),
+        border = BorderStroke(1.dp, highlightColor),
+        shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(8.dp)) {
         Row(modifier = Modifier.padding(4.dp),
             verticalAlignment = Alignment.Top) {
@@ -44,9 +53,9 @@ fun AnimeRow(animeData: Data, navController: NavController) {
             else R.string.img404url
 
             ShimmerImage(imgUrl = imgUrl.toString(), modifier = Modifier
-                .width(120.dp)
+                .fillMaxWidth(0.35f)
                 .fillMaxHeight()
-                .padding(end = 4.dp))
+                .padding(start = 6.dp, end = 4.dp, top = 4.dp, bottom = 4.dp))
 
             Column {
                 val title = if (!animeData.title_english.isNullOrEmpty())
@@ -74,43 +83,67 @@ fun AnimeRow(animeData: Data, navController: NavController) {
 
                 Text(
                     text = title,
-                    overflow = TextOverflow.Ellipsis
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White
                 )
+                Spacer(modifier = Modifier.height(2.dp))
                 Text(
                     text = "Studio: $studio",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
                 )
                 Text(
                     text = "Episodes: ${animeData.episodes!!}",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
                 )
                 Text(
                     text = "Released: $year",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
                 )
                 Text(
                     text = "Status: ${animeData.status!!}",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
                 )
                 Text(
                     text = "MAL Score: ${animeData.score!!}",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
                 )
                 Text(
-                    text = "Genres: $genre0 ",
+                    text = "Genres: $genre0",
                     overflow = TextOverflow.Clip,
+                    fontFamily = poppinsFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontStyle = FontStyle.Italic,
                     style = MaterialTheme.typography.labelSmall,
-                    fontStyle = FontStyle.Italic
+                    color = Color.White
+
                 )
             }
         }

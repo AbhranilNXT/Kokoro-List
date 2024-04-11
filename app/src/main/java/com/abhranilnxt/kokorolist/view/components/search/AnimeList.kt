@@ -12,6 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.data.utils.UiState
+import com.abhranilnxt.kokorolist.ui.theme.highlightColor
+import com.abhranilnxt.kokorolist.ui.theme.primaryColor
 import com.abhranilnxt.kokorolist.vm.AnimeSearchViewModel
 
 @Composable
@@ -24,12 +26,14 @@ fun AnimeList(navController: NavController, viewModel:AnimeSearchViewModel = hil
             viewModel.loadAnime(query = "")
         }
         is UiState.Loading -> {
-            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth(),
+                color = highlightColor,
+                trackColor = primaryColor)
         }
         is UiState.Success -> {
             val listOfAnime = animeList.data.data
             LazyColumn(modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp)
+                contentPadding = PaddingValues(start = 32.dp, end = 32.dp, top = 16.dp, bottom = 16.dp)
             ) {
                 items(listOfAnime.size) {
                     AnimeRow(listOfAnime[it], navController)
