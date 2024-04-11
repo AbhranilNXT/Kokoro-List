@@ -66,7 +66,7 @@ fun StatsScreen(navController: NavController, viewModel: HomeScreenViewModel = h
 
     Scaffold(
         topBar = {
-            AppBar(title = "Anime Stats",
+            AppBar(title = "Your Stats",
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
                 showProfile = false,
                 showStats = true,
@@ -130,7 +130,7 @@ fun StatsScreen(navController: NavController, viewModel: HomeScreenViewModel = h
                 OutlinedCard(modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 32.dp, end = 32.dp, bottom = 16.dp),
-                    colors = CardDefaults.cardColors(Color.Transparent),
+                    colors = CardDefaults.cardColors(primaryColor),
                     border = BorderStroke(1.dp, highlightColor),
                     shape = RoundedCornerShape(24.dp),
                     elevation = CardDefaults.cardElevation(5.dp)) {
@@ -191,7 +191,7 @@ fun AnimeRowStats(animeData: MAnime) {
         .fillMaxWidth()
         .height(196.dp)
         .padding(8.dp),
-        colors = CardDefaults.cardColors(Color.Transparent),
+        colors = CardDefaults.cardColors(primaryColor),
         border = BorderStroke(1.dp, highlightColor),
         shape = RoundedCornerShape(20.dp),
         elevation = CardDefaults.cardElevation(8.dp)) {
