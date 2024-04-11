@@ -66,7 +66,7 @@ fun PasswordInput(
         shape = RoundedCornerShape(16.dp),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Password,
-            imeAction = imeAction,
+            imeAction = imeAction
         ),
         visualTransformation = visualTransformation,
         trailingIcon = { PasswordVisibility(passwordVisibility = passwordVisibility) },

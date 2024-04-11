@@ -35,7 +35,7 @@ fun SimpleForm(modifier: Modifier,
             .background(Color.White, CircleShape)
             .padding(horizontal = 20.dp, vertical = 12.dp),
             valueState = textFieldValue,
-            labelId = "Enter comments about the anime!",
+            labelId = "Enter notes about the anime!",
             enabled = true,
             onAction = KeyboardActions {
                 if (!valid) return@KeyboardActions

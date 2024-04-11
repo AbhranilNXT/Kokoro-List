@@ -1,5 +1,6 @@
 package com.abhranilnxt.kokorolist.view.screens
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -45,6 +46,7 @@ import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.utils.UiState
 import com.abhranilnxt.kokorolist.data.model.details.Details
 import com.abhranilnxt.kokorolist.data.model.main.MAnime
+import com.abhranilnxt.kokorolist.data.utils.showToast
 import com.abhranilnxt.kokorolist.ui.theme.baseColor
 import com.abhranilnxt.kokorolist.ui.theme.highlightColor
 import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
@@ -130,6 +132,8 @@ fun DetailsScreen(navController: NavController, animeId: Int,
 
 @Composable
 fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
+
+    val context = LocalContext.current
 
     val localDimensions = LocalContext.current.resources.displayMetrics
     val animeData = data.data.data
@@ -283,7 +287,7 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 malId = animeId,
                 userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
             )
-            saveToFirebase(anime, navController)
+            saveToFirebase(anime, navController,context)
 //            saveToFirebaseRealtime(anime,navController)
         }
         Spacer(modifier = Modifier.width(25.dp))
@@ -294,7 +298,7 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
 }
 
 
-fun saveToFirebase(anime: MAnime, navController: NavController) {
+fun saveToFirebase(anime: MAnime, navController: NavController, context: Context) {
     val db = FirebaseFirestore.getInstance()
     val dbCollection = db.collection("anime")
 
@@ -306,6 +310,7 @@ fun saveToFirebase(anime: MAnime, navController: NavController) {
                     .addOnCompleteListener {
                         if(it.isSuccessful) {
                             navController.popBackStack()
+                            showToast(context = context,"Anime added to Watchlist !")
                         }
                     }
                     .addOnFailureListener {

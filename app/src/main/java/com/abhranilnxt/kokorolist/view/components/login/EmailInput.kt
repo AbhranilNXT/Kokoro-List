@@ -14,7 +14,7 @@ fun EmailInput(
     emailState: MutableState<String>,
     labelId: String = "Email",
     enabled: Boolean = true,
-    imeAction: ImeAction = ImeAction.Next,
+    imeAction: ImeAction = ImeAction.None,
     onAction: KeyboardActions = KeyboardActions.Default
 ) {
 
