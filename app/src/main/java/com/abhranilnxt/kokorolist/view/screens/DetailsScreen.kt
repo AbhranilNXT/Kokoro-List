@@ -301,8 +301,8 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
                 malId = animeId,
                 userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
             )
+            saveToFirebaseRealtime(anime,navController)
             saveToFirebase(anime, navController,context)
-//            saveToFirebaseRealtime(anime,navController)
         }
         Spacer(modifier = Modifier.width(25.dp))
         RoundedButton(label = "Cancel"){
@@ -341,9 +341,6 @@ fun saveToFirebaseRealtime(anime: MAnime, navController: NavController) {
 
     if (anime.toString().isNotEmpty()) {
         dbCollection.child("${anime.userId}").child("${anime.malId}").setValue(anime)
-            .addOnSuccessListener {
-                navController.popBackStack()
-            }
 
     }
 }
