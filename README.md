@@ -21,7 +21,7 @@ Kokoro List is an Android application designed to streamline your anime watching
 - [Installation](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#installation)
 - [License](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#license)
 - [Feedback](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#feedback)
-- [Platform/Software(s) used to develop this](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#platformssoftwares-used-to-develop-this)
+- [Platform/Software(s) used to develop this](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#platformssoftwaress-used-to-develop-this)
 - [Source Code](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#source-code)
 - [Contributing](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#contributing)
 
