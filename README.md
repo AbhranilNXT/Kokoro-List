@@ -12,17 +12,18 @@ An Android Application which can be used to keep track of your Anime Watchlist i
 Kokoro List is an Android application designed to streamline your anime watching experience. It caters to both casual and hardcore anime fans by offering a comprehensive suite of features within a user-friendly interface.
 
 ## Table of contents
-- [Logo](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#logo)
-- [Authors](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#authors)
-- [Screenshots](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#screenshots)
-- [Features](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#features)
-- [Color references](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#color-reference)
-- [Installation](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#installation)
-- [License](https://github.com/AbhranilNXT/Kokoro-List?tab=GPL-3.0-1-ov-file)
-- [Feedback](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#feedback)
-- [Platform/Software(s) used to develop this](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#platformssoftwares-used-to-develop-this)
-- [Source Code](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#source-code)
-- [Contributing](https://github.com/AbhranilNXT/Scavenger-Hunt-App?tab=readme-ov-file#contributing)
+- [Logo](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#logo)
+- [Authors](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#authors)
+- [Screenshots](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#screenshots)
+- [Features](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#features)
+- [Features Coming Soon!](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#features-coming-soon)
+- [Color references](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#color-reference)
+- [Installation](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#installation)
+- [License](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#license)
+- [Feedback](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#feedback)
+- [Platform/Software(s) used to develop this](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#platformssoftwares-used-to-develop-this)
+- [Source Code](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#source-code)
+- [Contributing](https://github.com/AbhranilNXT/Kokoro-List?tab=readme-ov-file#contributing)
 
 
 ## Logo
@@ -72,7 +73,7 @@ Kokoro List is an Android application designed to streamline your anime watching
 
 Install the Scavenger Hunt Application in your Android phones by downloading the APK provided in the Releases Section.
 
-[APK](https://github.com/AbhranilNXT/Scavenger-Hunt-Clone/releases/tag/v1.0.1) 
+[APK](https://github.com/AbhranilNXT/Kokoro-List/releases/download/v1.0.3/Kokoro.List.v1.0.3.apk) 
     
 ## License
 
