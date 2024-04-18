@@ -71,7 +71,7 @@ Kokoro List is an Android application designed to streamline your anime watching
 
 ## Installation
 
-Install the Scavenger Hunt Application in your Android phones by downloading the APK provided in the Releases Section.
+Install the Kokoro List Application in your Android phones by downloading the APK provided in the Releases Section.
 
 [APK](https://github.com/AbhranilNXT/Kokoro-List/releases/download/v1.0.3/Kokoro.List.v1.0.3.apk) 
     
