@@ -11,7 +11,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class LoginViewModel: ViewModel() {
     private val auth: FirebaseAuth = Firebase.auth
@@ -19,21 +18,17 @@ class LoginViewModel: ViewModel() {
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean> = _loading
 
-    fun signInWithEmailPass(email: String, password: String, home: () -> Unit) = viewModelScope.launch {
-        try {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener() { task ->
-                    if (task.isSuccessful) {
-                        Log.d("FB", "signInWithEmailAndPass: Success ${task.result}")
-                        home()
-                    } else {
-                        Log.d("FB", "signInWithEmailAndPass: ${task.result}")
-                    }
+    fun signInWithEmailPass(email: String, password: String,error: (String) -> Unit, home: () -> Unit) = viewModelScope.launch {
+        auth.signInWithEmailAndPassword(email,password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    home()
                 }
-        }
-        catch (ex: Exception) {
-            Log.d("FB", "signInWithEmailAndPass: ${ex.message}")
-        }
+            }
+            .addOnFailureListener {
+                Log.d("FB", "signInWithEmailAndPass: ${it.localizedMessage}")
+                it.localizedMessage?.let { it1 -> error(it1) }
+            }
     }
 
     fun createUserWithEmailPass(email: String, password: String, home: () -> Unit) {

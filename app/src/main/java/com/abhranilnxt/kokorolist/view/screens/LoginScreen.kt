@@ -1,6 +1,7 @@
 package com.abhranilnxt.kokorolist.view.screens
 
 import android.app.Activity
+import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -42,6 +43,7 @@ import com.abhranilnxt.kokorolist.vm.LoginViewModel
 fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
 
     val activity = (LocalContext.current as? Activity)
+    val context = LocalContext.current
     BackHandler {
         activity?.finish()
     }
@@ -82,7 +84,10 @@ fun LoginScreen(navController: NavController, viewModel: LoginViewModel = androi
             verticalArrangement = Arrangement.Bottom) {
 
             if(showLoginForm.value) UserForm(loading = false, isCreateAccount = false,navController) { email, pwd ->
-                viewModel.signInWithEmailPass(email, pwd){
+                viewModel.signInWithEmailPass(email, pwd, error = {
+                    Toast.makeText(context, it, Toast.LENGTH_LONG).show()
+                }){
+                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_LONG).show()
                     navController.navigate(KokoroListScreens.HomeScreen.route){
                         popUpTo(KokoroListScreens.LoginScreen.route){
                             inclusive = true
