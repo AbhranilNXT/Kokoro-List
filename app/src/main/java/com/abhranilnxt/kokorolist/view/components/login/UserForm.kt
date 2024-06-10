@@ -90,14 +90,14 @@ fun UserForm(
                 if (!valid) return@KeyboardActions
                 onDone(email.value.trim(), password.value.trim())
             })
-        Row(horizontalArrangement = Arrangement.End) {
-            Spacer(modifier = Modifier.fillMaxWidth(0.6f))
+        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+            Spacer(modifier = Modifier.weight(1f))
             Text(text = "Reset Password",
                 modifier = Modifier
                     .clickable {
                         navController.navigate(KokoroListScreens.ResetPasswordScreen.route)
                     }
-                    .padding(end = 14.dp),
+                    .padding(end = 24.dp),
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Medium,
                 color = highlightColor)
