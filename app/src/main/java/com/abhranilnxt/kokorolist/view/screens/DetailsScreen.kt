@@ -2,6 +2,7 @@ package com.abhranilnxt.kokorolist.view.screens
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -29,6 +30,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
+import com.abhranilnxt.kokorolist.data.model.be.PostAnimeBody
 import com.abhranilnxt.kokorolist.data.utils.UiState
 import com.abhranilnxt.kokorolist.data.model.details.Details
 import com.abhranilnxt.kokorolist.data.model.main.MAnime
@@ -59,6 +62,7 @@ import com.abhranilnxt.kokorolist.view.components.core.RoundedButton
 import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
 import com.abhranilnxt.kokorolist.view.components.core.YoutubePlayer
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
+import com.abhranilnxt.kokorolist.vm.BackendViewModel
 import com.abhranilnxt.kokorolist.vm.DetailsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -67,7 +71,29 @@ import com.google.firebase.ktx.Firebase
 
 @Composable
 fun DetailsScreen(navController: NavController, animeId: Int,
-                  viewModel: DetailsViewModel = hiltViewModel()) {
+                  viewModel: DetailsViewModel = hiltViewModel(),
+                  backEndViewModel: BackendViewModel = hiltViewModel()) {
+    val context = LocalContext.current
+    val addAnimeToWatchlistState = backEndViewModel.addAnimeToWatchlistState.collectAsState().value
+
+    LaunchedEffect(addAnimeToWatchlistState) {
+        when(addAnimeToWatchlistState) {
+            is UiState.Success -> {
+                Toast.makeText(context, "Anime added to watchlist", Toast.LENGTH_SHORT).show()
+                navController.navigate(KokoroListScreens.SearchScreen.route) {
+                    popUpTo(KokoroListScreens.DetailsScreen.route) {
+                        inclusive = true
+                        saveState = true
+                    }
+                }
+            }
+            is UiState.Error -> {
+                Toast.makeText(context, addAnimeToWatchlistState.message, Toast.LENGTH_SHORT).show()
+            }
+            else -> Unit
+        }
+    }
+
     Scaffold(topBar = {
         AppBar(title = "Anime Details",
             icon = Icons.AutoMirrored.Filled.ArrowBack,
@@ -127,7 +153,7 @@ fun DetailsScreen(navController: NavController, animeId: Int,
                         }
                     }
                     is UiState.Success -> {
-                        AnimeDetails(data = data, navController)
+                        AnimeDetails(data = data, navController, backEndViewModel)
 
                     }
                     else -> {}
@@ -138,7 +164,7 @@ fun DetailsScreen(navController: NavController, animeId: Int,
 }
 
 @Composable
-fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
+fun AnimeDetails(data: UiState.Success<Details>, navController: NavController, viewModel: BackendViewModel) {
 
     val context = LocalContext.current
 
@@ -286,23 +312,19 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController) {
     Row(modifier = Modifier.padding(4.dp),
         horizontalArrangement = Arrangement.SpaceAround) {
         RoundedButton(label = "Save"){
-            val anime = MAnime(
+            val animeBody = PostAnimeBody(
+                malId = animeId,
                 title = title.toString(),
                 studio = studio,
                 episodes = animeData?.episodes.toString(),
                 year = year.toString(),
                 status = animeData?.status.toString(),
-                malscore = animeData?.score,
+                malScore = animeData.score,
                 genres = genre0,
                 synopsis = animeData?.synopsis.toString(),
-                notes = "",
-                imgUrl = imgUrl.toString(),
-                rating = 0.0,
-                malId = animeId,
-                userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+                imageUrl = imgUrl.toString()
             )
-            saveToFirebaseRealtime(anime,navController)
-            saveToFirebase(anime, navController,context)
+            viewModel.addAnimeToWatchlist(animeBody)
         }
         Spacer(modifier = Modifier.width(25.dp))
         RoundedButton(label = "Cancel"){

@@ -1,9 +1,12 @@
 package com.abhranilnxt.kokorolist.di
 
+import com.abhranilnxt.kokorolist.BuildConfig
 import com.abhranilnxt.kokorolist.data.remote.AnimeApi
+import com.abhranilnxt.kokorolist.data.remote.BackendApi
 import com.abhranilnxt.kokorolist.data.repo.AnimeRepository
 import com.abhranilnxt.kokorolist.data.repo.FireRepository
 import com.abhranilnxt.kokorolist.data.utils.Constants
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
@@ -36,4 +39,17 @@ object AppModule {
             .build()
             .create(AnimeApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideBackendApi(): BackendApi {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(BackendApi::class.java)
+    }
+
+    @Provides
+    fun providesFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 }
