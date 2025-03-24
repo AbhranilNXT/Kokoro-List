@@ -4,6 +4,7 @@ package com.abhranilnxt.kokorolist.view.screens
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,8 +37,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -78,6 +81,7 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
     val noInternetLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_internet_anim))
     val loadingLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
     val notFoundLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.not_found_anim))
+    var loadingActive by remember { mutableStateOf(false) }
 
     val deleteUserState = viewModel.deleteUserState.collectAsState().value
 
@@ -96,6 +100,9 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
             }
             is UiState.Error -> {
                 Toast.makeText(context, deleteUserState.message, Toast.LENGTH_SHORT).show()
+            }
+            is UiState.Loading -> {
+                loadingActive = true
             }
             else -> Unit
         }
@@ -124,7 +131,8 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
                 contentScale = ContentScale.Crop
             )
         }
-        Surface(modifier = Modifier.padding(it),
+        Surface(modifier = Modifier.padding(it)
+            .then(if (loadingActive) Modifier.blur(12.dp) else Modifier),
             color = Color.Transparent) {
             val userStats = viewModel.getUserStatsState.collectAsState().value
             when(userStats)
@@ -222,6 +230,7 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
                             if(logOutDialog.value) {
                                 ShowAlertDialog(title = "Log Out", message = stringResource(id = R.string.log_out_sure) + "\n"+
                                         stringResource(id = R.string.action), logOutDialog) {
+                                    Toast.makeText(context, "Logged Out Successfully!", Toast.LENGTH_SHORT).show()
                                     FirebaseAuth.getInstance().signOut().run {
                                         navController.navigate(KokoroListScreens.LoginScreen.route){
                                             popUpTo(KokoroListScreens.HomeScreen.route){
@@ -308,6 +317,34 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
                 }
             }
 
+        }
+        if (loadingActive) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    LottieAnimation(
+                        composition = loadingLottie,
+                        modifier = Modifier.size(220.dp),
+                        contentScale = ContentScale.Fit,
+                        iterations = LottieConstants.IterateForever
+                    )
+                    Text(
+                        text = "Deleting user...",
+                        fontFamily = poppinsFamily,
+                        fontWeight = FontWeight.Normal,
+                        fontStyle = FontStyle.Italic,
+                        fontSize = 16.sp,
+                        color = Color.White
+                    )
+                }
+            }
         }
     }
 }
