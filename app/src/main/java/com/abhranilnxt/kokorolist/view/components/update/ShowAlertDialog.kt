@@ -8,6 +8,7 @@ import androidx.compose.runtime.MutableState
 
 @Composable
 fun ShowAlertDialog(
+    title: String,
     message: String,
     openDialog: MutableState<Boolean>,
     onYesPressed: () -> Unit
@@ -19,7 +20,7 @@ fun ShowAlertDialog(
                                 Text(text = "Yes")
                             }
             },
-            title = { Text(text = "Delete Anime")},
+            title = { Text(text = title)},
             text = { Text(text = message)},
             dismissButton = {
                 TextButton(onClick = { openDialog.value = false }) {

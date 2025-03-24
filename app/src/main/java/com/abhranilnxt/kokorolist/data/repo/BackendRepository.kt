@@ -163,4 +163,22 @@ class BackendRepository @Inject constructor(private val api: BackendApi,
             return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
+
+    suspend fun deleteUser(token: String, id: String): UiState<CustomResponse<Unit>> {
+        val response = api.deleteUser(token, id)
+        try {
+            if(response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
+        }
+    }
 }

@@ -216,4 +216,31 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
             }
         }
     }
+
+    private val _deleteUserState: MutableStateFlow<UiState<CustomResponse<Unit>>> =
+        MutableStateFlow(UiState.Idle)
+    val deleteUserState = _deleteUserState.asStateFlow()
+
+    fun deleteUser(id: String) {
+        deleteUserFromDB(id)
+    }
+
+    private fun deleteUserFromDB(id: String) {
+        _deleteUserState.value = UiState.Loading
+
+        viewModelScope.launch {
+            try {
+                _deleteUserState.value = repository.deleteUser(repository.getIdToken(), id)
+            } catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _deleteUserState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _deleteUserState.value = UiState.Error("No internet connection or network error")
+            } catch (e: Exception) {
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _deleteUserState.value = UiState.Error(e.message ?: "An unexpected error occurred")
+            }
+        }
+    }
 }

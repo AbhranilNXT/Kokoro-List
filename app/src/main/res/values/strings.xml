@@ -4,4 +4,5 @@
     <string name="img404url">https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg</string>
     <string name="sure">Are you sure you want to delete this anime?</string>
     <string name="action">This action is not reversible</string>
+    <string name="log_out_sure">Are you sure you want to log out?</string>
 </resources>

@@ -4,7 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,12 +32,11 @@ fun RoundedButton(
         color = highlightColor
     ) {
         Column(modifier = Modifier
-            .width(94.dp)
             .heightIn(40.dp)
             .clickable { onPress.invoke() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = label,
+            Text(modifier = Modifier.padding(start = 8.dp, end = 8.dp), text = label,
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,

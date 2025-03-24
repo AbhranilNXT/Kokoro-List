@@ -219,7 +219,7 @@ fun ShowSimpleForm(anime: GetWatchlistItemResponse, navController: NavController
             mutableStateOf(false)
         }
         if(openDialog.value) {
-            ShowAlertDialog(message = stringResource(id = R.string.sure) + "\n"+
+            ShowAlertDialog(title = "Delete Anime", message = stringResource(id = R.string.sure) + "\n"+
             stringResource(id = R.string.action), openDialog) {
                 viewModel.deleteWatchlistItem(
                     anime.watchlistId

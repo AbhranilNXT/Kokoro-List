@@ -56,4 +56,10 @@ interface BackendApi {
         @Header("Authorization") token: String,
         @Path("id") id: String
     ) : Response<CustomResponse<Unit>>
+
+    @DELETE("auth/delete/{id}")
+    suspend fun deleteUser(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ): Response<CustomResponse<Unit>>
 }

@@ -1,6 +1,7 @@
 package com.abhranilnxt.kokorolist.view.screens
 
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -30,14 +31,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -52,7 +58,10 @@ import com.abhranilnxt.kokorolist.ui.theme.highlightColor
 import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
 import com.abhranilnxt.kokorolist.ui.theme.primaryColor
 import com.abhranilnxt.kokorolist.view.components.core.AppBar
+import com.abhranilnxt.kokorolist.view.components.core.RoundedButton
 import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
+import com.abhranilnxt.kokorolist.view.components.update.ShowAlertDialog
+import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 import com.abhranilnxt.kokorolist.vm.BackendViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -64,17 +73,39 @@ import java.util.Locale
 @Composable
 fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hiltViewModel()) {
 
+    val context = LocalContext.current
     val currentUser = FirebaseAuth.getInstance().currentUser
     val noInternetLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_internet_anim))
     val loadingLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
     val notFoundLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.not_found_anim))
+
+    val deleteUserState = viewModel.deleteUserState.collectAsState().value
+
+    LaunchedEffect(deleteUserState) {
+        when(deleteUserState) {
+            is UiState.Success -> {
+                Toast.makeText(context, "Account Deleted Successfully!", Toast.LENGTH_SHORT).show()
+                FirebaseAuth.getInstance().signOut().run {
+                    navController.navigate(KokoroListScreens.LoginScreen.route){
+                        popUpTo(KokoroListScreens.HomeScreen.route){
+                            inclusive = true
+                            saveState = true
+                        }
+                    }
+                }
+            }
+            is UiState.Error -> {
+                Toast.makeText(context, deleteUserState.message, Toast.LENGTH_SHORT).show()
+            }
+            else -> Unit
+        }
+    }
 
     Scaffold(
         topBar = {
             AppBar(title = "Your Stats",
                 icon = Icons.AutoMirrored.Filled.ArrowBack,
                 showProfile = false,
-                showStats = true,
                 navController = navController) {
                 navController.popBackStack()
             }
@@ -126,7 +157,9 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
                     }
                 }
                 is UiState.Success -> {
-                    Column {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Spacer(modifier = Modifier.height(16.dp))
                         Row {
                             Box(modifier = Modifier
@@ -175,10 +208,44 @@ fun StatsScreen(navController: NavController, viewModel: BackendViewModel = hilt
                                     color = Color.White)
                             }
                         }
+                        Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                            val logOutDialog = remember {
+                                mutableStateOf(false)
+                            }
+                            val deleteDialog = remember {
+                                mutableStateOf(false)
+                            }
+                            RoundedButton(label = "Log Out") {
+                                logOutDialog.value = true
+                            }
+                            Spacer(modifier = Modifier.fillMaxWidth(0.4f))
+                            if(logOutDialog.value) {
+                                ShowAlertDialog(title = "Log Out", message = stringResource(id = R.string.log_out_sure) + "\n"+
+                                        stringResource(id = R.string.action), logOutDialog) {
+                                    FirebaseAuth.getInstance().signOut().run {
+                                        navController.navigate(KokoroListScreens.LoginScreen.route){
+                                            popUpTo(KokoroListScreens.HomeScreen.route){
+                                                inclusive = true
+                                                saveState = true
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            if(deleteDialog.value) {
+                                ShowAlertDialog(title = "Delete Account Permanently", message = stringResource(id = R.string.sure) + "\n"+
+                                        stringResource(id = R.string.action), deleteDialog) {
+                                    viewModel.deleteUser(currentUser!!.uid)
+                                }
+                            }
+                            RoundedButton(label = "Delete Account") {
+                                deleteDialog.value = true
+                            }
+                        }
 
                         HorizontalDivider(color = highlightColor,
                             thickness = 1.dp,
-                            modifier = Modifier.padding(8.dp))
+                            modifier = Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp))
                         if(userStats.data.data!!.finishedAnimeList.isNullOrEmpty()){
                             Column(
                                 modifier = Modifier
