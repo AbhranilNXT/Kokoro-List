@@ -20,10 +20,10 @@ import com.abhranilnxt.kokorolist.view.components.core.AppBar
 import com.abhranilnxt.kokorolist.view.components.home.FABContent
 import com.abhranilnxt.kokorolist.view.components.home.HomeContent
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
-import com.abhranilnxt.kokorolist.vm.HomeScreenViewModel
+import com.abhranilnxt.kokorolist.vm.BackendViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel:HomeScreenViewModel =  hiltViewModel()) {
+fun HomeScreen(navController: NavController, viewModel: BackendViewModel =  hiltViewModel()) {
 
     val activity = (LocalContext.current as? Activity)
     BackHandler {

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class GetWatchlistItemResponse(
     @SerializedName("watchlistId")
-    val watchlistId: Int,
+    val watchlistId: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("imageUrl")
@@ -19,7 +19,7 @@ data class GetWatchlistItemResponse(
     val genres: String,
     @SerializedName("episodes")
     val episodes: String,
-    @SerializedName("malScore")
+    @SerializedName("mal_score")
     val malScore: Double,
     @SerializedName("status")
     val status: String,
@@ -30,5 +30,5 @@ data class GetWatchlistItemResponse(
     @SerializedName("finished_watching")
     val finishedWatching: String?,
     @SerializedName("notes")
-    val notes: String
+    val notes: String?
 )

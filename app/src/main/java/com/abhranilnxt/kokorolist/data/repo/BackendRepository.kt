@@ -9,19 +9,30 @@ import com.abhranilnxt.kokorolist.data.model.be.PostAnimeBody
 import com.abhranilnxt.kokorolist.data.model.be.PostWatchlistBody
 import com.abhranilnxt.kokorolist.data.remote.BackendApi
 import com.abhranilnxt.kokorolist.data.utils.UiState
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
+import okio.IOException
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class BackendRepository @Inject constructor(private val api: BackendApi,
     private val auth: FirebaseAuth) {
     suspend fun loginUser(token: String): UiState<CustomResponse<Unit>> {
         val response = api.loginUser(token)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
@@ -36,70 +47,120 @@ class BackendRepository @Inject constructor(private val api: BackendApi,
             } else {
                 "No Token Found"
             }
-        } catch (e: Exception) {
-            Log.e("AuthRepo", "Error getting token", e)
-            "No Token Found"
+        }catch (e: FirebaseNetworkException) {
+            throw IOException("No internet connection or network error", e)
+        }
+        catch (e: Exception) {
+            throw Exception("Error getting token: ${e.message}", e)
         }
     }
 
     suspend fun addAnimeToWatchlist(token: String, postAnimeBody: PostAnimeBody): UiState<CustomResponse<Unit>> {
         val response = api.addAnimeToWatchlist(token, postAnimeBody)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        }
-        else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            }
+            else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
     suspend fun getWatchlistItems(token: String): UiState<CustomResponse<GetWatchlistResponse>> {
         val response = api.getWatchlistItems(token)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
     suspend fun getWatchlistItem(token: String, id: String): UiState<CustomResponse<GetWatchlistItemResponse>> {
         val response = api.getWatchlistItem(token, id)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
     suspend fun updateWatchlistItem(token: String, id: String, postWatchlistBody: PostWatchlistBody): UiState<CustomResponse<Unit>> {
         val response = api.updateWatchlistItem(token, id, postWatchlistBody)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
     suspend fun getUserStats(token: String): UiState<CustomResponse<GetStatsResponse>> {
         val response = api.getUserStats(token)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 
     suspend fun deleteWatchlistItem(token: String, id: String): UiState<CustomResponse<Unit>> {
         val response = api.deleteWatchlistItem(token, id)
-        if (response.isSuccessful) {
-            Log.e("BackendViewModel", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
-            return UiState.Success(data = response.body()!!)
-        } else {
-            return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+        try {
+            if (response.isSuccessful) {
+                Log.d("BackendRepository", "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+                return UiState.Success(data = response.body()!!)
+            } else {
+                return UiState.Error(message = "HTTP ${response.code()} - ${response.errorBody()?.string()}")
+            }
+        }catch (e: IOException) {
+            return (UiState.Error("No internet connection or network error"))
+        } catch (e: HttpException) {
+            return (UiState.Error("HTTP error: ${e.message ?: "Internal Server Error"}"))
+        } catch (e: Exception) {
+            return (UiState.Error("Unexpected error: ${e.message ?: "An unexpected error occurred"}"))
         }
     }
 }

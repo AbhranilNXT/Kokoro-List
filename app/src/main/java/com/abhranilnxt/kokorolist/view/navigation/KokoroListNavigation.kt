@@ -1,22 +1,19 @@
 package com.abhranilnxt.kokorolist.view.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.abhranilnxt.kokorolist.view.screens.ResetPasswordScreen
 import com.abhranilnxt.kokorolist.view.screens.DetailsScreen
 import com.abhranilnxt.kokorolist.view.screens.HomeScreen
 import com.abhranilnxt.kokorolist.view.screens.LoginScreen
+import com.abhranilnxt.kokorolist.view.screens.ResetPasswordScreen
 import com.abhranilnxt.kokorolist.view.screens.SearchScreen
 import com.abhranilnxt.kokorolist.view.screens.SplashScreen
 import com.abhranilnxt.kokorolist.view.screens.StatsScreen
 import com.abhranilnxt.kokorolist.view.screens.UpdateScreen
-import com.abhranilnxt.kokorolist.vm.AnimeSearchViewModel
-import com.abhranilnxt.kokorolist.vm.HomeScreenViewModel
 
 @Composable
 fun KokoroListNavigation() {
@@ -33,8 +30,7 @@ fun KokoroListNavigation() {
         }
 
         composable(KokoroListScreens.HomeScreen.route) {
-            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
-            HomeScreen(navController = navController, viewModel = homeViewModel)
+            HomeScreen(navController = navController)
         }
 
         composable(KokoroListScreens.ResetPasswordScreen.route) {
@@ -42,8 +38,7 @@ fun KokoroListNavigation() {
         }
 
         composable(KokoroListScreens.SearchScreen.route) {
-            val searchViewModel = hiltViewModel<AnimeSearchViewModel>()
-            SearchScreen(navController = navController, viewModel = searchViewModel)
+            SearchScreen(navController = navController)
         }
 
         val detailName = KokoroListScreens.DetailsScreen.route
@@ -63,14 +58,13 @@ fun KokoroListNavigation() {
         })) {backStackEntry ->
             backStackEntry.arguments?.getString("malId").let {
                 if (it != null) {
-                    UpdateScreen(navController = navController, malId = it.toString())
+                    UpdateScreen(navController = navController, watchlistId = it.toString())
                 }
             }
         }
         
         composable(KokoroListScreens.StatsScreen.route) {
-            val homeViewModel = hiltViewModel<HomeScreenViewModel>()
-            StatsScreen(navController = navController, viewModel = homeViewModel)
+            StatsScreen(navController = navController)
         }
     }
 }

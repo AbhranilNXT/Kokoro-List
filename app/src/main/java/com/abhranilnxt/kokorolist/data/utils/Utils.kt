@@ -1,15 +1,20 @@
 package com.abhranilnxt.kokorolist.data.utils
 
 import android.content.Context
-import android.icu.text.DateFormat
 import android.widget.Toast
-import com.google.firebase.Timestamp
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-fun formatDate(timestamp: Timestamp): String {
-    val date = DateFormat.getDateInstance()
-        .format(timestamp.toDate())
-        .toString().split(",")[0]
-    return date
+fun formatDate(dateTimeString: String, outputPattern: String = "dd MMM yyyy"): String {
+    return try {
+        val inputFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+        val dateTime = LocalDateTime.parse(dateTimeString, inputFormatter)
+
+        val outputFormatter = DateTimeFormatter.ofPattern(outputPattern)
+        dateTime.format(outputFormatter)
+    } catch (e: Exception) {
+        "Invalid date format"
+    }
 }
 
 fun showToast(context: Context,

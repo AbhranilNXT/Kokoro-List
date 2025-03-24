@@ -84,12 +84,6 @@ dependencies {
     // Add the dependency for the Firebase Authentication library
     implementation("com.google.firebase:firebase-auth-ktx")
 
-    // Add the dependency for the Firebase Firestore library
-    implementation("com.google.firebase:firebase-firestore-ktx")
-
-    // Add the dependency for the Firebase Realtime Database library
-    implementation("com.google.firebase:firebase-database-ktx")
-
     //dagger-hilt
     val hiltVersion = "2.48"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
@@ -120,13 +114,6 @@ dependencies {
 
     //OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-
-    //Room
-    val roomVers = "2.6.1"
-    implementation("androidx.room:room-runtime:$roomVers")
-    annotationProcessor("androidx.room:room-compiler:$roomVers")
-    ksp("androidx.room:room-compiler:$roomVers")
-    implementation("androidx.room:room-ktx:$roomVers")
 
     //Lottie
     val lottieVersion = "6.4.0"

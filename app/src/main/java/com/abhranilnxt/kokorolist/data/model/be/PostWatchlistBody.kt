@@ -3,12 +3,12 @@ package com.abhranilnxt.kokorolist.data.model.be
 import com.google.gson.annotations.SerializedName
 
 data class PostWatchlistBody(
-    @SerializedName("personal_rating")
-    val personalRating: Int?,
-    @SerializedName("started_watching")
-    val startedWatching: String?,
-    @SerializedName("finished_watching")
-    val finishedWatching: String?,
+    @SerializedName("personalRating")
+    val personalRating: Int? = null,
+    @SerializedName("startedWatching")
+    val startedWatching: String? = null,
+    @SerializedName("finishedWatching")
+    val finishedWatching: String? = null,
     @SerializedName("notes")
-    val notes: String?
+    val notes: String? = null
 )

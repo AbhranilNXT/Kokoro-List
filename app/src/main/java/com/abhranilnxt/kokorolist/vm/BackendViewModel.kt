@@ -11,10 +11,12 @@ import com.abhranilnxt.kokorolist.data.model.be.PostAnimeBody
 import com.abhranilnxt.kokorolist.data.model.be.PostWatchlistBody
 import com.abhranilnxt.kokorolist.data.repo.BackendRepository
 import com.abhranilnxt.kokorolist.data.utils.UiState
+import com.google.firebase.FirebaseNetworkException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,8 +40,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
         viewModelScope.launch {
             try {
                 _verifyTokenState.value = repository.loginUser(token)
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _verifyTokenState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _verifyTokenState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _verifyTokenState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -58,8 +67,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
         viewModelScope.launch {
             try {
                 _addAnimeToWatchlistState.value = repository.addAnimeToWatchlist(repository.getIdToken(), postAnimeBody)
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _addAnimeToWatchlistState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _addAnimeToWatchlistState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _addAnimeToWatchlistState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -78,8 +94,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
         viewModelScope.launch {
             try {
                 _getWatchlistItemsState.value = repository.getWatchlistItems(repository.getIdToken())
+            } catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _getWatchlistItemsState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _getWatchlistItemsState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _getWatchlistItemsState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -99,8 +122,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
             try {
                 _getWatchlistItemState.value =
                     repository.getWatchlistItem(repository.getIdToken(), id)
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _getWatchlistItemState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _getWatchlistItemState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _getWatchlistItemState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -120,8 +150,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
             try {
                 _updateWatchlistItemState.value =
                     repository.updateWatchlistItem(repository.getIdToken(), id, postWatchlistBody)
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _updateWatchlistItemState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _updateWatchlistItemState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _updateWatchlistItemState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -140,8 +177,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
         viewModelScope.launch {
             try {
                 _getUserStatsState.value = repository.getUserStats(repository.getIdToken())
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _getUserStatsState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _getUserStatsState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _getUserStatsState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }
@@ -160,8 +204,15 @@ class BackendViewModel @Inject constructor(private val repository: BackendReposi
         viewModelScope.launch {
             try {
                 _deleteWatchlistItemState.value = repository.deleteWatchlistItem(repository.getIdToken(), id)
+            }catch (e: IOException) {
+                Log.e("BackendViewModel", "Network error: ${e.message}")
+                _deleteWatchlistItemState.value = UiState.Error("No internet connection or network error")
+            } catch (e: FirebaseNetworkException) {
+                Log.e("BackendViewModel", "Firebase Network error: ${e.message}")
+                _deleteWatchlistItemState.value = UiState.Error("No internet connection or network error")
             } catch (e: Exception) {
-                Log.e("BackendViewModel", e.message.toString())
+                Log.e("BackendViewModel", "Unexpected error: ${e.message}")
+                _deleteWatchlistItemState.value = UiState.Error(e.message ?: "An unexpected error occurred")
             }
         }
     }

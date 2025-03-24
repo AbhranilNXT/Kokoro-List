@@ -28,7 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.abhranilnxt.kokorolist.data.model.main.MAnime
+import com.abhranilnxt.kokorolist.data.model.be.WatchlistItem
 import com.abhranilnxt.kokorolist.ui.theme.baseColor
 import com.abhranilnxt.kokorolist.ui.theme.highlightColor
 import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
@@ -37,7 +37,7 @@ import com.abhranilnxt.kokorolist.view.components.core.ShimmerImage
 
 
 @Composable
-fun ListCard(anime: MAnime,
+fun ListCard(anime: WatchlistItem,
              onPressDetails: (String) -> Unit = {}) {
 
     OutlinedCard(shape = RoundedCornerShape(29.dp),
@@ -52,7 +52,7 @@ fun ListCard(anime: MAnime,
     ) {
         Column(modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            ShimmerImage(imgUrl = anime.imgUrl.toString(),
+            ShimmerImage(imgUrl = anime.imageUrl.toString(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.69f))
@@ -65,11 +65,13 @@ fun ListCard(anime: MAnime,
                 overflow = TextOverflow.Ellipsis,
                 color = Color.White)
 
-            Text(text = "Studio: ${anime.studio.toString()}", modifier = Modifier.padding(),
+            Text(text = "Studio: ${anime.studio}", modifier = Modifier.padding(start = 4.dp, end = 2.dp),
                 fontFamily = poppinsFamily,
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Italic,
                 fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 color = highlightColor)
 
             val isStartedWatching = remember {
@@ -77,7 +79,7 @@ fun ListCard(anime: MAnime,
             }
 
             Row(horizontalArrangement = Arrangement.SpaceBetween) {
-                AnimeRating(score = anime.rating?.toInt()!!)
+                AnimeRating(score = anime.personalRating.toInt())
 
                 Surface(modifier = Modifier
                     .padding(4.dp),

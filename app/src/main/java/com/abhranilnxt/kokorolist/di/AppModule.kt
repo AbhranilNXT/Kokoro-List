@@ -4,10 +4,8 @@ import com.abhranilnxt.kokorolist.BuildConfig
 import com.abhranilnxt.kokorolist.data.remote.AnimeApi
 import com.abhranilnxt.kokorolist.data.remote.BackendApi
 import com.abhranilnxt.kokorolist.data.repo.AnimeRepository
-import com.abhranilnxt.kokorolist.data.repo.FireRepository
 import com.abhranilnxt.kokorolist.data.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,11 +21,6 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAnimeRepository(api: AnimeApi) = AnimeRepository(api)
-
-    @Singleton
-    @Provides
-    fun provideFireRepository() = FireRepository(queryAnime = FirebaseFirestore.getInstance()
-        .collection("anime"))
 
 
     @Singleton

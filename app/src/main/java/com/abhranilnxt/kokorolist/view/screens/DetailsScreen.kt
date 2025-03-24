@@ -1,18 +1,20 @@
 package com.abhranilnxt.kokorolist.view.screens
 
-import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -23,7 +25,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -32,8 +33,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
@@ -49,10 +55,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.abhranilnxt.kokorolist.R
 import com.abhranilnxt.kokorolist.data.model.be.PostAnimeBody
-import com.abhranilnxt.kokorolist.data.utils.UiState
 import com.abhranilnxt.kokorolist.data.model.details.Details
-import com.abhranilnxt.kokorolist.data.model.main.MAnime
-import com.abhranilnxt.kokorolist.data.utils.showToast
+import com.abhranilnxt.kokorolist.data.utils.UiState
 import com.abhranilnxt.kokorolist.ui.theme.baseColor
 import com.abhranilnxt.kokorolist.ui.theme.highlightColor
 import com.abhranilnxt.kokorolist.ui.theme.poppinsFamily
@@ -64,10 +68,10 @@ import com.abhranilnxt.kokorolist.view.components.core.YoutubePlayer
 import com.abhranilnxt.kokorolist.view.navigation.KokoroListScreens
 import com.abhranilnxt.kokorolist.vm.BackendViewModel
 import com.abhranilnxt.kokorolist.vm.DetailsViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 
 @Composable
 fun DetailsScreen(navController: NavController, animeId: Int,
@@ -75,6 +79,9 @@ fun DetailsScreen(navController: NavController, animeId: Int,
                   backEndViewModel: BackendViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val addAnimeToWatchlistState = backEndViewModel.addAnimeToWatchlistState.collectAsState().value
+    val noInternetLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_internet_anim))
+    val loadingLottie by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
+    var loadingActive by remember { mutableStateOf(false) }
 
     LaunchedEffect(addAnimeToWatchlistState) {
         when(addAnimeToWatchlistState) {
@@ -89,6 +96,9 @@ fun DetailsScreen(navController: NavController, animeId: Int,
             }
             is UiState.Error -> {
                 Toast.makeText(context, addAnimeToWatchlistState.message, Toast.LENGTH_SHORT).show()
+            }
+            is UiState.Loading -> {
+                loadingActive = true
             }
             else -> Unit
         }
@@ -123,40 +133,111 @@ fun DetailsScreen(navController: NavController, animeId: Int,
 
         val scrollableState = rememberScrollState()
 
-        Surface(modifier = Modifier
-            .padding(top = 80.dp)
-            .fillMaxSize()
-            .verticalScroll(scrollableState),
-            color = Color.Transparent) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = 80.dp)
+        ) {
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(scrollableState)
+                    .then(if (loadingActive) Modifier.blur(12.dp) else Modifier),
+                color = Color.Transparent
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Top
+                ) {
+                    val data = viewModel.animeInfo.collectAsState().value
+                    when (data) {
+                        is UiState.Idle -> {
+                            viewModel.animeInfo(animeId = animeId)
+                        }
 
-                val data = viewModel.animeInfo.collectAsState().value
-                when(data)
-                {
-                    is UiState.Idle -> {
-                        viewModel.animeInfo(animeId = animeId)
-                    }
-                    is UiState.Loading -> {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = "Loading....",
-                                fontFamily = poppinsFamily,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 20.sp,
-                                color = highlightColor
+                        is UiState.Loading -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                LottieAnimation(
+                                    composition = loadingLottie,
+                                    modifier = Modifier.size(220.dp),
+                                    contentScale = ContentScale.Fit,
+                                    iterations = LottieConstants.IterateForever
                                 )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            LinearProgressIndicator(modifier = Modifier.fillMaxWidth(),
-                                color = highlightColor,
-                                trackColor = primaryColor
-                            )
+                                Text(
+                                    text = "Loading anime details...",
+                                    fontFamily = poppinsFamily,
+                                    fontWeight = FontWeight.Normal,
+                                    fontStyle = FontStyle.Italic,
+                                    fontSize = 16.sp,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                        is UiState.Success -> {
+                            AnimeDetails(data = data, navController, backEndViewModel)
+                        }
+
+                        is UiState.Error -> {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.Center
+                            ) {
+                                LottieAnimation(
+                                    composition = noInternetLottie,
+                                    modifier = Modifier.size(220.dp),
+                                    contentScale = ContentScale.Fit,
+                                    iterations = LottieConstants.IterateForever
+                                )
+                                Text(
+                                    text = data.message.toString(),
+                                    fontFamily = poppinsFamily,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontStyle = FontStyle.Italic,
+                                    fontSize = 16.sp,
+                                    color = Color.Red
+                                )
+                            }
                         }
                     }
-                    is UiState.Success -> {
-                        AnimeDetails(data = data, navController, backEndViewModel)
+                }
+            }
 
+            if (loadingActive) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.5f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        LottieAnimation(
+                            composition = loadingLottie,
+                            modifier = Modifier.size(220.dp),
+                            contentScale = ContentScale.Fit,
+                            iterations = LottieConstants.IterateForever
+                        )
+                        Text(
+                            text = "Adding to your watchlist...",
+                            fontFamily = poppinsFamily,
+                            fontWeight = FontWeight.Normal,
+                            fontStyle = FontStyle.Italic,
+                            fontSize = 16.sp,
+                            color = Color.White
+                        )
                     }
-                    else -> {}
                 }
             }
         }
@@ -165,8 +246,6 @@ fun DetailsScreen(navController: NavController, animeId: Int,
 
 @Composable
 fun AnimeDetails(data: UiState.Success<Details>, navController: NavController, viewModel: BackendViewModel) {
-
-    val context = LocalContext.current
 
     val localDimensions = LocalContext.current.resources.displayMetrics
     val animeData = data.data.data
@@ -330,39 +409,5 @@ fun AnimeDetails(data: UiState.Success<Details>, navController: NavController, v
         RoundedButton(label = "Cancel"){
             navController.popBackStack()
         }
-    }
-}
-
-
-fun saveToFirebase(anime: MAnime, navController: NavController, context: Context) {
-    val db = FirebaseFirestore.getInstance()
-    val dbCollection = db.collection("anime")
-
-    if(anime.toString().isNotEmpty()) {
-        dbCollection.add(anime)
-            .addOnSuccessListener {
-                val docId = it.id
-                dbCollection.document(docId).update(hashMapOf("id" to docId) as Map<String, Any>)
-                    .addOnCompleteListener {
-                        if(it.isSuccessful) {
-                            navController.popBackStack()
-                            showToast(context = context,"Anime added to Watchlist !")
-                        }
-                    }
-                    .addOnFailureListener {
-                        Log.d("Error FB", "Error updating doc", it)
-                    }
-            }
-    }
-}
-
-
-fun saveToFirebaseRealtime(anime: MAnime, navController: NavController) {
-    val db = Firebase.database
-    val dbCollection = db.getReference("anime")
-
-    if (anime.toString().isNotEmpty()) {
-        dbCollection.child("${anime.userId}").child("${anime.malId}").setValue(anime)
-
     }
 }
