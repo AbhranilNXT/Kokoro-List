@@ -77,7 +77,7 @@ fun ResetPasswordScreen(navController: NavController) {
             auth.sendPasswordResetEmail(email.value)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        showToast(context, "Reset Password Email Sent!")
+                        showToast(context, "If that email is registered, a reset link has been sent.")
                         keyboardController?.hide()
                         navController.navigate(KokoroListScreens.LoginScreen.route) {
                             popUpTo(KokoroListScreens.ResetPasswordScreen.route) {
@@ -88,6 +88,9 @@ fun ResetPasswordScreen(navController: NavController) {
                     } else {
                         showToast(context, "Failed!")
                     }
+                }
+                .addOnFailureListener {
+                    showToast(context, "Failed: ${it.localizedMessage}")
                 }
         }
         Spacer(modifier = Modifier.height(150.dp))
